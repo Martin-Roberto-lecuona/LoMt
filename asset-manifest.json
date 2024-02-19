@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Martin-Roberto-lecuona/LoMt/lomt-front/static/css/main.f855e6bc.css",
-    "main.js": "/Martin-Roberto-lecuona/LoMt/lomt-front/static/js/main.43e88887.js",
-    "static/js/453.6a33665d.chunk.js": "/Martin-Roberto-lecuona/LoMt/lomt-front/static/js/453.6a33665d.chunk.js",
-    "static/media/logo.svg": "/Martin-Roberto-lecuona/LoMt/lomt-front/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
-    "index.html": "/Martin-Roberto-lecuona/LoMt/lomt-front/index.html",
-    "main.f855e6bc.css.map": "/Martin-Roberto-lecuona/LoMt/lomt-front/static/css/main.f855e6bc.css.map",
-    "main.43e88887.js.map": "/Martin-Roberto-lecuona/LoMt/lomt-front/static/js/main.43e88887.js.map",
-    "453.6a33665d.chunk.js.map": "/Martin-Roberto-lecuona/LoMt/lomt-front/static/js/453.6a33665d.chunk.js.map"
+    "main.css": "/Martin-Roberto-lecuona/LoMt/static/css/main.f855e6bc.css",
+    "main.js": "/Martin-Roberto-lecuona/LoMt/static/js/main.8cbea385.js",
+    "static/js/453.6a33665d.chunk.js": "/Martin-Roberto-lecuona/LoMt/static/js/453.6a33665d.chunk.js",
+    "static/media/logo.svg": "/Martin-Roberto-lecuona/LoMt/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/Martin-Roberto-lecuona/LoMt/index.html",
+    "main.f855e6bc.css.map": "/Martin-Roberto-lecuona/LoMt/static/css/main.f855e6bc.css.map",
+    "main.8cbea385.js.map": "/Martin-Roberto-lecuona/LoMt/static/js/main.8cbea385.js.map",
+    "453.6a33665d.chunk.js.map": "/Martin-Roberto-lecuona/LoMt/static/js/453.6a33665d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f855e6bc.css",
-    "static/js/main.43e88887.js"
+    "static/js/main.8cbea385.js"
   ]
 }
