@@ -79,7 +79,7 @@ const Register = ({ setShowLogin, setShowRegister }) => {
             ) : (
                 <div>
                     <p ref={errorRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>{errMsg}</p>
-                    <h1>Sign In</h1>
+                    <h1>Register</h1>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor='username' className={styles.label}>Username: </label>
                         <input
