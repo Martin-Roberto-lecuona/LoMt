@@ -1,0 +1,27 @@
+.navBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: violet;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.navBarOpen{
+    display: flex;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: violet;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    /* right: 0; */
+}
+.navBarLink{
+    display: flex;
+    font-size: 2em;
+    font-weight: 400;
+    color: antiquewhite;
+    padding-top: 90px;
+
+}
