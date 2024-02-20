@@ -1,0 +1,156 @@
+.register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.register form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.register label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+}
+
+.register input {
+    display: flex; 
+    align-items: center; 
+    width: 100%; 
+    padding: 10px; 
+    margin-bottom: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    font-size: 16px; 
+    line-height: 1.5; 
+    color: #333; 
+    background-color: #fff; 
+    transition: border-color 0.2s ease-in-out;
+    
+}
+
+.register input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* .register input:invalid {
+    border-color: #dc3545;
+    border-width: 3px;
+} */
+
+/* .register input:valid {
+    border-color: #28a745;
+    border-width: 3px;
+} */
+
+.register .icon {
+    top: 50%; 
+    transform: translate(10px, 50%); 
+    color: #dc3545;
+}
+
+.register .note {
+    font-size: 12px;
+    margin-top: 5px;
+    margin-bottom: 0;
+    color: #6c757d;
+}
+
+.register button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    background-color: #007bff;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.register button:hover {
+    background-color: #0069d9;
+}
+
+.register button:disabled {
+    background-color: #c0c0c0;
+    cursor: not-allowed;
+}
+
+.register p {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.register p a {
+    color: #007bff;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.register p span {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.errmsg {
+    color: #dc3545;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .register form {
+        max-width: 100%;
+    }
+}
+
+.register input[title] {
+    position: relative;
+}
+
+.register input[title]::before {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    padding: 5px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+}
+
+.register input[title]:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
