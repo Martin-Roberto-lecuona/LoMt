@@ -47,20 +47,15 @@
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-/* .register input:invalid {
-    border-color: #dc3545;
-    border-width: 3px;
-} */
 
-/* .register input:valid {
-    border-color: #28a745;
-    border-width: 3px;
-} */
-
-.register .icon {
-    top: 50%; 
-    transform: translate(10px, 50%); 
+.register .iconWrong {
+    padding-left: 200px;
     color: #dc3545;
+}
+
+.register .iconRight {
+    padding-left: 200px;
+    color: #28a745;
 }
 
 .register .note {

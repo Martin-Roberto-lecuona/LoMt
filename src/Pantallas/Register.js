@@ -4,13 +4,20 @@ import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './Register.module.css'
 
+
+const MAIL_REGEX = /^[[a-z]|[A-Z]|[0-9]]+(?:\\.[[a-z]|[A-Z]|[0-9]]+)*@[[a-z]|[A-Z]|[0-9]]+(?:\\.[[a-z]|[A-Z]|[0-9]]+)*$/;
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PASS_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!'#$%]){8,24}/;
 
 const Register = ({ setShowLogin, setShowRegister }) => {
+    const mailRef = useRef()
     const userRef = useRef()
     const errorRef = useRef()
 
+    const [mail, setMail] = useState('')
+    const [validMail, setValidMail] = useState(false)
+    const [mailFocus, setMailFocus] = useState(false)
+    
     const [user, setUser] = useState('')
     const [validName, setValidName] = useState(false)
     const [userFocus, setUserFocus] = useState(false)
@@ -31,25 +38,20 @@ const Register = ({ setShowLogin, setShowRegister }) => {
     }, [])
 
     useEffect(() => {
-        if (user == '') {
-            setValidName(true)
-            console.log(user);
-        } else {
-            const result = USER_REGEX.test(user)
-            setValidName(result)
-        }
+        const result = MAIL_REGEX.test(mail)
+        setValidMail(result)
+    }, [mail])
+
+    useEffect(() => {
+        const result = USER_REGEX.test(user)
+        setValidName(result)
     }, [user])
 
     useEffect(() => {
-        if (pass === '') {
-            setValidPass(true)
-            setValidMatch(true)
-        } else{
-            const result = PASS_REGEX.test(pass)
-            setValidPass(result)
-            const match = pass === matchPass
-            setValidMatch(match)
-        }
+        const result = PASS_REGEX.test(pass)
+        setValidPass(result)
+        const match = pass === matchPass
+        setValidMatch(match)
     }, [pass, matchPass])
 
     useEffect(() => {
@@ -60,6 +62,7 @@ const Register = ({ setShowLogin, setShowRegister }) => {
         e.preventDefault()
         setSuccess(true)
         setShowRegister(false)
+        setShowLogin(true)
     }
 
     const handleLoginClick  = () => {
@@ -81,6 +84,20 @@ const Register = ({ setShowLogin, setShowRegister }) => {
                     <p ref={errorRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>{errMsg}</p>
                     <h1>Register</h1>
                     <form onSubmit={handleSubmit}>
+                    <label htmlFor='email' className={styles.label}>E-mail: </label>
+                        <input
+                            type='email'
+                            id='email'
+                            ref={mailRef}
+                            autoComplete='off'
+                            onChange={(e) => setMail(e.target.value)}
+                            value={mail}
+                            required
+                            className={styles.input}
+                            title='Valid mail is needed.'
+                        />
+                        {!validMail && mail && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} />}
+                        {validMail && mail && <FontAwesomeIcon icon={faCheck} className={styles.iconRight}  />}
                         <label htmlFor='username' className={styles.label}>Username: </label>
                         <input
                             type='text'
@@ -93,8 +110,8 @@ const Register = ({ setShowLogin, setShowRegister }) => {
                             className={styles.input}
                             title='4-24 characters.<br />Must begin with a letter.<br />Letters, numbers, underscores, hyphens allowed.'
                         />
-                        {!validName && user && <FontAwesomeIcon icon={faTimes} className={styles.icon} />}
-                        {validName && user && <FontAwesomeIcon icon={faCheck} className={styles.icon} />}
+                        {!validName && user && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} />}
+                        {validName && user && <FontAwesomeIcon icon={faCheck} className={styles.iconRight} />}
 
                         <label htmlFor='password' className={styles.label}>Password: </label>
                         <input
@@ -106,8 +123,8 @@ const Register = ({ setShowLogin, setShowRegister }) => {
                             className={styles.input}
                             title='8-24 characters.<br />Must include uppercase and lowercase letters, a number and a special character.<br />Allowed special characters: !#$%'
                         />
-                        {!validPass && pass && <FontAwesomeIcon icon={faTimes} className={styles.icon} />}
-                        {validPass && pass && <FontAwesomeIcon icon={faCheck} className={styles.icon} />}
+                        {!validPass && pass && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} />}
+                        {validPass && pass && <FontAwesomeIcon icon={faCheck} className={styles.iconRight} />}
 
                         <label htmlFor='passwordConfirm' className={styles.label}>Confirm Password: </label>
                         <input
@@ -119,10 +136,10 @@ const Register = ({ setShowLogin, setShowRegister }) => {
                             className={styles.input}
                             title='Must be the same as the password'
                         />
-                        {!validMatch && matchPass && <FontAwesomeIcon icon={faTimes} className={styles.icon} />}
-                        {validMatch && matchPass && <FontAwesomeIcon icon={faCheck} className={styles.icon} />}
+                        {!validMatch && matchPass && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} />}
+                        {validMatch && matchPass && <FontAwesomeIcon icon={faCheck} className={styles.iconRight} />}
 
-                        <button disabled={!validName || !validPass || !validMatch} className={styles.button}> Create account </button>
+                        <button disabled={!validMail || !validName || !validPass || !validMatch} className={styles.button}> Create account </button>
                     </form>
 
                     <p>

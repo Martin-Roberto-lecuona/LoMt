@@ -20,10 +20,6 @@ const Register = ({ setShowLogin, setShowRegister }) => {
     const [validPass, setValidPass] = useState(false)
     const [passFocus, setPassFocus] = useState(false)
 
-    const [matchPass, setMatchPass] = useState('')
-    const [validMatch, setValidMatch] = useState(false)
-    const [matchFocus, setMatchFocus] = useState(false)
-
     const [errMsg, setErrMsg] = useState('')
     const [success, setSuccess] = useState(false)
 
@@ -44,14 +40,11 @@ const Register = ({ setShowLogin, setShowRegister }) => {
     useEffect(() => {
         if (pass === '') {
             setValidPass(true)
-            setValidMatch(true)
         } else{
             const result = PASS_REGEX.test(pass)
             setValidPass(result)
-            const match = pass === matchPass
-            setValidMatch(match)
         }
-    }, [pass, matchPass])
+    }, [pass])
 
     useEffect(() => {
         setErrMsg('')
@@ -92,10 +85,8 @@ const Register = ({ setShowLogin, setShowRegister }) => {
                             value={user}
                             required
                             className={styles.input}
-                            title='4-24 characters.<br />Must begin with a letter.<br />Letters, numbers, underscores, hyphens allowed.'
+                            title='User'
                         />
-                        {!validName && user && <FontAwesomeIcon icon={faTimes} className={styles.icon} />}
-                        {validName && user && <FontAwesomeIcon icon={faCheck} className={styles.icon} />}
 
                         <label htmlFor='password' className={styles.label}>Password: </label>
                         <input
@@ -105,25 +96,10 @@ const Register = ({ setShowLogin, setShowRegister }) => {
                             value={pass}
                             required
                             className={styles.input}
-                            title='8-24 characters.<br />Must include uppercase and lowercase letters, a number and a special character.<br />Allowed special characters: !#$%'
+                            title='Password'
                         />
-                        {!validPass && pass && <FontAwesomeIcon icon={faTimes} className={styles.icon} />}
-                        {validPass && pass && <FontAwesomeIcon icon={faCheck} className={styles.icon} />}
 
-                        {/* <label htmlFor='passwordConfirm' className={styles.label}>Confirm Password: </label>
-                        <input
-                            type='password'
-                            id='passwordConfirm'
-                            onChange={(e) => setMatchPass(e.target.value)}
-                            value={matchPass}
-                            required
-                            className={styles.input}
-                            title='Must be the same as the password'
-                        />
-                        {!validMatch && matchPass && <FontAwesomeIcon icon={faTimes} className={styles.icon} />}
-                        {validMatch && matchPass && <FontAwesomeIcon icon={faCheck} className={styles.icon} />}*/}
-
-                        <button disabled={!validName || !validPass || !validMatch} className={styles.button}> Sign In </button> 
+                        <button className={styles.button}> Sign In </button> 
                     </form>
                     
                     
