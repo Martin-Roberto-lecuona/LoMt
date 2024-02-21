@@ -3,6 +3,8 @@ import { useRef, useState, useEffect } from 'react'
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './Register.module.css'
+import FadeTransition from '../Componentes/FadeTransition'
+
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PASS_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!'#$%]){8,24}/;
@@ -64,6 +66,7 @@ const Register = ({ setShowLogin, setShowRegister }) => {
         <div className={styles.register}>
             {success ? (
                 <section>
+                    <FadeTransition duration={2}></FadeTransition>
                     <h1> You are logged in! </h1>
                     <br />
                     <p>
@@ -111,6 +114,7 @@ const Register = ({ setShowLogin, setShowRegister }) => {
 
                 </div>
             )}
+           
         </div>
     )
 }

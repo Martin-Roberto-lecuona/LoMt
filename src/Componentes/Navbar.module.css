@@ -1,27 +1,43 @@
-.navBar{
+.titleLogo{
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: violet;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 5px;
+    font-weight: 600;
 }
 .navBarOpen{
     display: flex;
-    position: absolute;
+    align-items: start;
+    position: fixed;
     height: 100%;
-    width: 100%;
-    background-color: violet;
+    width: 20%;
+    background-color: #f5f5f5;
     flex-direction: column;
-    align-items: center;
+    
     padding-top: 10px;
-    /* right: 0; */
+    border-width: 20px;
+    border-color: black;
+    
 }
+.navBar{
+    display: flex;
+    align-items: start;
+    position: fixed;
+    height: 100%;
+    width: 5%;
+    background-color: #f5f5f5;
+    flex-direction: column;
+    padding-top: 10px;
+    border-width: 20px;
+    border-color: black;
+}
+
 .navBarLink{
     display: flex;
-    font-size: 2em;
-    font-weight: 400;
-    color: antiquewhite;
-    padding-top: 90px;
+    font-size: 1em;
+    font-weight: 500;
+    color: brown;
+    padding-top: 10px;
+    padding-left: 5px;
+    justify-content: space-between;
+
 
 }
