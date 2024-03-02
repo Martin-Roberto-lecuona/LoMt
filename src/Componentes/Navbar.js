@@ -60,7 +60,7 @@ const Navbar = () => {
 			
 			{navBarOpen && <img  src={logoLomt} height={'150px'}/>}
 			{!navBarOpen && !navBarOnTop && <p className={styles.logo}><img src={logoLomt} height={'90px'}/></p>}
-			{navBarOnTop && <p className={styles.logo}><img src={logoLomt} height={'80px'}/></p>}
+			{navBarOnTop && <p className={styles.logo}><img src={logoLomt} height={'70px'}/></p>}
 
 			<ul className = {navBarOnTop ? styles.LinkContainerTop : styles.LinkContainer}> 
 				{links.map(x => (
