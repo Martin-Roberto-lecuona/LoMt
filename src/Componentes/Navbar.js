@@ -57,10 +57,10 @@ const Navbar = () => {
   return (
     <div className={!navBarOnTop ? (navBarOpen ?  styles.navBarOpen : styles.navBar) : styles.navBarOnTop}
 			onMouseOver={handleLinkHover} onMouseLeave={handleLinkLeave}>
-			
-			{navBarOpen && <img  src={logoLomt} height={'150px'}/>}
-			{!navBarOpen && !navBarOnTop && <p className={styles.logo}><img src={logoLomt} height={'90px'}/></p>}
-			{navBarOnTop && <p className={styles.logo}><img src={logoLomt} height={'70px'}/></p>}
+
+			{navBarOpen && <p className={styles.logo}><img src={logoLomt} height={'100px'}/></p>}
+			{!navBarOpen && !navBarOnTop && <p className={styles.logo}><img src={logoLomt} height={'60px'}/></p>}
+			{navBarOnTop && <p className={styles.logoOnTop}><img src={logoLomt} height={'50px'}/></p>}
 
 			<ul className = {navBarOnTop ? styles.LinkContainerTop : styles.LinkContainer}> 
 				{links.map(x => (
