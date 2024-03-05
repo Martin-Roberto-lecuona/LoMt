@@ -3,38 +3,44 @@ import { useRef, useState, useEffect } from 'react'
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './Register.module.css'
-
+import { useUser } from '../Hooks/UserContext';
 
 const MAIL_REGEX = /^[[a-z]|[A-Z]|[0-9]]+(?:\\.[[a-z]|[A-Z]|[0-9]]+)*@[[a-z]|[A-Z]|[0-9]]+(?:\\.[[a-z]|[A-Z]|[0-9]]+)*$/;
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PASS_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!'#$%]){8,24}/;
+const APILINK= 'https://dummyjson.com/users'
 
 const Register = ({ setShowLogin, setShowRegister }) => {
+    
     const mailRef = useRef()
-    const userRef = useRef()
+    const userNameRef = useRef()
     const errorRef = useRef()
+
+    const {user,setUser} = useUser()
+
+    const [newUser, setNewUser] = useState({
+        username: '',
+        password: '',
+        mail: '',
+      });
 
     const [mail, setMail] = useState('')
     const [validMail, setValidMail] = useState(false)
-    const [mailFocus, setMailFocus] = useState(false)
     
-    const [user, setUser] = useState('')
+    const [userName, setUserName] = useState('')
     const [validName, setValidName] = useState(false)
-    const [userFocus, setUserFocus] = useState(false)
 
     const [pass, setPass] = useState('')
     const [validPass, setValidPass] = useState(false)
-    const [passFocus, setPassFocus] = useState(false)
 
     const [matchPass, setMatchPass] = useState('')
     const [validMatch, setValidMatch] = useState(false)
-    const [matchFocus, setMatchFocus] = useState(false)
 
     const [errMsg, setErrMsg] = useState('')
     const [success, setSuccess] = useState(false)
 
     useEffect(() => {
-        userRef.current.focus()
+        userNameRef.current.focus()
     }, [])
 
     useEffect(() => {
@@ -43,9 +49,9 @@ const Register = ({ setShowLogin, setShowRegister }) => {
     }, [mail])
 
     useEffect(() => {
-        const result = USER_REGEX.test(user)
+        const result = USER_REGEX.test(userName)
         setValidName(result)
-    }, [user])
+    }, [userName])
 
     useEffect(() => {
         const result = PASS_REGEX.test(pass)
@@ -56,13 +62,51 @@ const Register = ({ setShowLogin, setShowRegister }) => {
 
     useEffect(() => {
         setErrMsg('')
-    }, [user, pass])
+    }, [userName, pass])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setSuccess(true)
-        setShowRegister(false)
-        setShowLogin(true)
+        const controller = new AbortController();
+        try {
+            const responseUserName = await fetch(`${APILINK}/search?q=${userName}&limit=1`, {
+            signal: controller.signal});
+            const responseMail = await fetch(`${APILINK}/search?q=${mail}&limit=1`, {
+                signal: controller.signal});
+            
+            if (!responseUserName.ok) throw new Error('Error')
+            if (!responseMail.ok) throw new Error('Error')
+            
+                
+            const validUserName = await responseUserName.json();
+            if  (validUserName.users.length !=0 && validUserName.users[0].username === userName)
+                throw new Error('User allready exist');
+
+            const validUserMail = await responseMail.json();
+            if (validUserMail.users.length !=0 && validUserMail.users[0].email === mail)
+                throw new Error('Mail allready exist');
+            
+            setNewUser({username:userName, password:pass, mail:mail})
+            
+            const createUserResponse = await fetch(`${APILINK}/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newUser),
+            });
+    
+            if (!createUserResponse.ok) throw new Error('Error creating user');
+            
+            setUser({username:userName, password:pass, mail:mail});
+            setSuccess(true)
+            setShowRegister(false)
+            setShowLogin(false)
+
+            } catch (error) {
+                console.log(error.message);
+                setErrMsg(error.message);
+                setSuccess(false);
+            }
     }
 
     const handleLoginClick  = () => {
@@ -102,16 +146,16 @@ const Register = ({ setShowLogin, setShowRegister }) => {
                         <input
                             type='text'
                             id='username'
-                            ref={userRef}
+                            ref={userNameRef}
                             autoComplete='off'
-                            onChange={(e) => setUser(e.target.value)}
-                            value={user}
+                            onChange={(e) => setUserName(e.target.value)}
+                            value={userName}
                             required
                             className={styles.input}
                             title='4-24 characters.<br />Must begin with a letter.<br />Letters, numbers, underscores, hyphens allowed.'
                         />
-                        {!validName && user && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} />}
-                        {validName && user && <FontAwesomeIcon icon={faCheck} className={styles.iconRight} />}
+                        {!validName && userName && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} />}
+                        {validName && userName && <FontAwesomeIcon icon={faCheck} className={styles.iconRight} />}
 
                         <label htmlFor='password' className={styles.label}>Password: </label>
                         <input

@@ -9,10 +9,9 @@ import Login from './Pantallas/Login'
 import Profile from './Pantallas/Profile'
 import FadeTransition from './Componentes/FadeTransition'
 import { useState  } from 'react'
-import ReactDOM from 'react-dom';
 import React from 'react';
-import { UserProvider,useUser } from './Hooks/UserContext';
-
+import { UserProvider, useUser } from './Hooks/UserContext';
+import axios from "axios";
 
 function App() {
   const [showLogin, setShowLogin] = useState(true);
@@ -23,18 +22,32 @@ function App() {
   const [showSettings, setShowSettings] = useState(false);
   
 
+  const generateToggleFunction = (activeState) =>(
+    activeState=activeState.toLowerCase(),
+    setShowHome(activeState === 'home'),  
+    setShowProfile(activeState === 'profile'),
+    setShowClients(activeState === 'clients') ,
+    setShowSettings(activeState === 'settings')
+  );
+  const {user,setUser} = useUser()
+  
+  const handleLogout = () => {
+    setUser({ username: '', password: '', mail: ''});
+    setShowLogin(true)
+    localStorage.clear();
+  };
   return (
-    <UserProvider>
-      <div className="App" >
+      <div className="App">
         {showLogin && <Login setShowLogin={setShowLogin} setShowRegister= {setShowRegister}/>}
         {showRegister && <Register setShowLogin={setShowLogin}  setShowRegister= {setShowRegister}/>}
-          {!showLogin && !showRegister && (
+          {!showLogin && !showRegister  && (
           <FadeTransition>
           <Navbar 
-            toggleHomeScreen={() =>     {setShowHome(true);   setShowProfile(false);   setShowClients(false);  setShowSettings(false)}} 
-            toggleProfileScreen={() =>  {setShowHome(false);  setShowProfile(true);    setShowClients(false);  setShowSettings(false)}}
-            toggleClientsScreen={() =>  {setShowHome(false);  setShowProfile(false);   setShowClients(true);   setShowSettings(false)}}
-            toggleSettingsScreen={() => {setShowHome(false);  setShowProfile(false);   setShowClients(false);  setShowSettings(true)}}
+            toggleHomeScreen=     {() =>  {generateToggleFunction('home')}} 
+            toggleProfileScreen=  {() =>  {generateToggleFunction('profile')}}
+            toggleClientsScreen=  {() =>  {generateToggleFunction('clients')}}
+            toggleSettingsScreen= {() =>  {generateToggleFunction('settings')}}
+            handleLogout=         {handleLogout}
           />
 
           {showHome && <Home />}
@@ -43,7 +56,6 @@ function App() {
           {showSettings && <Settings />}
           </FadeTransition>)}
       </div>
-    </UserProvider>
   );
 }
 

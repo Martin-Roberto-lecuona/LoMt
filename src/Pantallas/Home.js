@@ -7,12 +7,15 @@ const Home = () => {
   return (
     <div name="Home" className={styles.home}>
       Home
-      <>`USER: ${user.username}`</>
       <br/>
-      <>`PASS: ${user.password}`</>
+      <>USER: {user.username}</>
       <br/>
-      <>`MAIL: ${user.mail}`</>
+      <>PASS: {user.password}</>
+      <br/>
+      <>MAIL: {user.mail}</>
+      
     </div>
+    
    
   )
 }

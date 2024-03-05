@@ -60,10 +60,11 @@
 
     justify-content: space-evenly;
 }
+
 .navBarOnTop{
     display: flex;
     align-items: start;
-    position: fixed;
+    position: sticky;
     flex-direction: row;
     height: 10%;
     width: 100%;

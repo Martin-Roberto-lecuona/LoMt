@@ -5,9 +5,9 @@ import { useUser } from '../Hooks/UserContext';
 const Profile = () => {
   const {user,setUser} = useUser()
   const [profileData, setProfileData] = useState({
-    username: '',
-    password: '',
-    mail: '',
+    username: user.username || '',
+    password: user.password || '',
+    mail: user.mail || '',
   });
   
   
@@ -57,7 +57,7 @@ const Profile = () => {
             type="mail"
             id="mail"
             name="mail"
-            value={profileData.email}
+            value={profileData.mail}
             onChange={handleInputChange}
             title="Enter your email"
             required

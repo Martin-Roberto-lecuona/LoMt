@@ -6,25 +6,26 @@ import { IoHomeSharp } from "react-icons/io5"
 import { FaUserCircle } from "react-icons/fa"
 import { TbUsersGroup } from "react-icons/tb"
 import { IoSettingsSharp } from "react-icons/io5"
+import { CgLogOut } from "react-icons/cg";
 
 import logoLomt from '../LoMT-logo.png';
 
 
-const Navbar = ({ toggleHomeScreen, toggleProfileScreen, toggleClientsScreen, toggleSettingsScreen }) => {
+const Navbar = ({ toggleHomeScreen, toggleProfileScreen, toggleClientsScreen, toggleSettingsScreen, handleLogout }) => {
 	const [navBarOpen, setNavBarOpen] = useState(false)
 	const [navBarOnTop, setNavBarOnTop] = useState(false)
 	const [windowDimension, setWindowDimension] = useState({
 			with : window.innerWidth,
 			height: window.innerHeight
 		})
-
+  
 	const links=[
 		{ id: 1, link: "Home"		,logo: <IoHomeSharp size={24} />	, action: toggleHomeScreen }, 
 		{ id: 2, link: "Profile"	,logo: <FaUserCircle size={24} />	, action: toggleProfileScreen },
 		{ id: 3, link: "Clients"	,logo: <TbUsersGroup size={24} />	, action: toggleClientsScreen },
-		{ id: 4, link: "Settings"	,logo: <IoSettingsSharp size={24} />, action: toggleSettingsScreen }
+		{ id: 4, link: "Settings"	,logo: <IoSettingsSharp size={24} />, action: toggleSettingsScreen },
+		{ id: 5, link: "LogOut"	,logo: <CgLogOut size={24}/>, action: handleLogout }
 	]
-
 
 
   const handleLinkHover = (e) => {
@@ -53,14 +54,19 @@ const Navbar = ({ toggleHomeScreen, toggleProfileScreen, toggleClientsScreen, to
     return () => {window.removeEventListener('resize', detectDimension)}
   }, [windowDimension]);
 
-
+  const renderLogo = (size, className) => (
+	<p className={className}>
+	  <img src={logoLomt} onClick={toggleHomeScreen} height={size} alt='Logo-LoMt'/>
+	</p>
+  );
   return (
     <div className={!navBarOnTop ? (navBarOpen ?  styles.navBarOpen : styles.navBar) : styles.navBarOnTop}
 			onMouseOver={handleLinkHover} onMouseLeave={handleLinkLeave}>
-
-			{navBarOpen && <p className={styles.logo}><img src={logoLomt} height={'100px'} alt='Logo-LoMt'/></p>}
-			{!navBarOpen && !navBarOnTop && <p className={styles.logo}><img src={logoLomt} height={'60px'} alt='Logo-LoMt'/></p>}
-			{navBarOnTop && <p className={styles.logoOnTop}><img src={logoLomt} height={'50px'} alt='Logo-LoMt'/></p>}
+		<>
+			{navBarOpen && renderLogo('100px', styles.logo)}
+			{!navBarOpen && !navBarOnTop && renderLogo('60px', styles.logo)}
+			{navBarOnTop && renderLogo('50px', styles.logoOnTop)}
+		</>
 
 			<ul className = {navBarOnTop ? styles.LinkContainerTop : styles.LinkContainer}> 
 				{links.map(({ id, link, logo, action }) => (
