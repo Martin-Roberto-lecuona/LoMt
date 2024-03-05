@@ -49,8 +49,8 @@ const Register = ({ setShowLogin, setShowRegister }) => {
 
     useEffect(() => {
         const result = PASS_REGEX.test(pass)
-        setValidPass(result)
         const match = pass === matchPass
+        setValidPass(result)
         setValidMatch(match)
     }, [pass, matchPass])
 

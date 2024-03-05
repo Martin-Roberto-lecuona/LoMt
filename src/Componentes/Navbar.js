@@ -10,7 +10,7 @@ import { IoSettingsSharp } from "react-icons/io5"
 import logoLomt from '../LoMT-logo.png';
 
 
-const Navbar = () => {
+const Navbar = ({ toggleHomeScreen, toggleProfileScreen, toggleClientsScreen, toggleSettingsScreen }) => {
 	const [navBarOpen, setNavBarOpen] = useState(false)
 	const [navBarOnTop, setNavBarOnTop] = useState(false)
 	const [windowDimension, setWindowDimension] = useState({
@@ -19,10 +19,10 @@ const Navbar = () => {
 		})
 
 	const links=[
-			{id:1   , path:'./Home'     , link:"Home"       , logo:<IoHomeSharp size={24}/>},
-			{id:2   , path:'./Profile'  , link:"Profile"    , logo:<FaUserCircle size={24}/>},
-			{id:3   , path:'./Clients'  , link:"Clients"    , logo:<TbUsersGroup size={24}/>},
-			{id:4   , path:'./Settings' , link:"Settings"   , logo:<IoSettingsSharp size={24}/>}
+		{ id: 1, link: "Home"		,logo: <IoHomeSharp size={24} />	, action: toggleHomeScreen }, 
+		{ id: 2, link: "Profile"	,logo: <FaUserCircle size={24} />	, action: toggleProfileScreen },
+		{ id: 3, link: "Clients"	,logo: <TbUsersGroup size={24} />	, action: toggleClientsScreen },
+		{ id: 4, link: "Settings"	,logo: <IoSettingsSharp size={24} />, action: toggleSettingsScreen }
 	]
 
 
@@ -58,19 +58,20 @@ const Navbar = () => {
     <div className={!navBarOnTop ? (navBarOpen ?  styles.navBarOpen : styles.navBar) : styles.navBarOnTop}
 			onMouseOver={handleLinkHover} onMouseLeave={handleLinkLeave}>
 
-			{navBarOpen && <p className={styles.logo}><img src={logoLomt} height={'100px'}/></p>}
-			{!navBarOpen && !navBarOnTop && <p className={styles.logo}><img src={logoLomt} height={'60px'}/></p>}
-			{navBarOnTop && <p className={styles.logoOnTop}><img src={logoLomt} height={'50px'}/></p>}
+			{navBarOpen && <p className={styles.logo}><img src={logoLomt} height={'100px'} alt='Logo-LoMt'/></p>}
+			{!navBarOpen && !navBarOnTop && <p className={styles.logo}><img src={logoLomt} height={'60px'} alt='Logo-LoMt'/></p>}
+			{navBarOnTop && <p className={styles.logoOnTop}><img src={logoLomt} height={'50px'} alt='Logo-LoMt'/></p>}
 
 			<ul className = {navBarOnTop ? styles.LinkContainerTop : styles.LinkContainer}> 
-				{links.map(x => (
-					<div>
+				{links.map(({ id, link, logo, action }) => (
+					<div key={id}>
 						<Link
-						to={x.link}
+						onClick={action}
+						to={link}
 						smooth
 						duration={100}
 						className = {navBarOnTop ? styles.navBarLinkTop : styles.navBarLink}>
-							{x.logo}  {navBarOpen && <span>{x.link}</span>}
+							{logo}  {navBarOpen && <span>{link}</span>}
 						</Link>
 					</div>
 				))}

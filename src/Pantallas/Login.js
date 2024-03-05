@@ -1,26 +1,17 @@
 import React from 'react'
-import { useRef, useState, useEffect } from 'react'
-import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useRef, useState, useEffect, useContext } from 'react'
 import styles from './Register.module.css'
 import FadeTransition from '../Componentes/FadeTransition'
-
-
-const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
-const PASS_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!'#$%]){8,24}/;
+import { useUser } from '../Hooks/UserContext';
 
 const Register = ({ setShowLogin, setShowRegister }) => {
 
+    const APILINK= "https://dummyjson.com/users"
     const userRef = useRef()
     const errorRef = useRef()
 
-    const [user, setUser] = useState('')
-    const [validName, setValidName] = useState(false)
-    const [userFocus, setUserFocus] = useState(false)
-
-    const [pass, setPass] = useState('')
-    const [validPass, setValidPass] = useState(false)
-    const [passFocus, setPassFocus] = useState(false)
+    const {user,setUser} = useUser()
+  
 
     const [errMsg, setErrMsg] = useState('')
     const [success, setSuccess] = useState(false)
@@ -29,37 +20,42 @@ const Register = ({ setShowLogin, setShowRegister }) => {
         userRef.current.focus()
     }, [])
 
-    useEffect(() => {
-        if (user == '') {
-            setValidName(true)
-            console.log(user);
-        } else {
-            const result = USER_REGEX.test(user)
-            setValidName(result)
-        }
-    }, [user])
-
-    useEffect(() => {
-        if (pass === '') {
-            setValidPass(true)
-        } else{
-            const result = PASS_REGEX.test(pass)
-            setValidPass(result)
-        }
-    }, [pass])
-
-    useEffect(() => {
-        setErrMsg('')
-    }, [user, pass])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setSuccess(true)
-        setShowLogin(false)
+        const controller = new AbortController();
+        try {
+            const response = await fetch(`${APILINK}/search?q=${user.username}&limit=1`, {
+            signal: controller.signal});
+            if (!response.ok) {
+                throw new Error('User not found');
+            }
+            const validUser = await response.json();
+            if  (!validUser.users.length || validUser.users[0].username !== user.username || validUser.users[0].password !== user.password)
+                throw new Error('User not found');
+            
+            setUser({
+                    ...user,
+                    mail: validUser.users[0].email
+                })
+            setSuccess(true);
+            setShowLogin(false);
+            
+        } catch (error) {
+            console.log('Error fetching user:', error);
+            setErrMsg('Error fetching user');
+            setSuccess(false);
+        }
     }
     const handleRegisterClick  = () => {
         setShowLogin(false)
         setShowRegister(true)
+    }
+    const handleChange = (e) => {
+        setUser({
+            ...user,
+            [e.target.id]: e.target.value.trim(),
+        })
     }
 
     return (
@@ -84,8 +80,7 @@ const Register = ({ setShowLogin, setShowRegister }) => {
                             id='username'
                             ref={userRef}
                             autoComplete='off'
-                            onChange={(e) => setUser(e.target.value)}
-                            value={user}
+                            onChange={handleChange}
                             required
                             className={styles.input}
                             title='User'
@@ -95,8 +90,7 @@ const Register = ({ setShowLogin, setShowRegister }) => {
                         <input
                             type='password'
                             id='password'
-                            onChange={(e) => setPass(e.target.value)}
-                            value={pass}
+                            onChange={handleChange}
                             required
                             className={styles.input}
                             title='Password'
@@ -104,8 +98,6 @@ const Register = ({ setShowLogin, setShowRegister }) => {
 
                         <button className={styles.button}> Sign In </button> 
                     </form>
-                    
-                    
                     <p>
                         
                         Don&apos;t have an account?                        
