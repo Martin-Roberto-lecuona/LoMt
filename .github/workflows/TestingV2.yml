@@ -34,11 +34,22 @@ jobs:
       contents: read
       pages: write
       id-token: write
+    needs: test
     steps:
-    - id: build-publish
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: 'gh-pages' 
+    # - id: build-publish
       env:
         CI: false
-      uses: bitovi/github-actions-react-to-github-pages@v1.2.2
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        path: build # change to your build folder
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./static
+      # uses: bitovi/github-actions-react-to-github-pages@v1.2.2
+      # with:
+      #   path: build # change to your build folder
+
       
