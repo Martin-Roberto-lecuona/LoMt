@@ -2,7 +2,7 @@ name: Testing before deployment
 
 on:
   pull_request:
-    branches: [ main-test ]
+    branches: [ main ]
 jobs:
   test:
     runs-on: ubuntu-latest
