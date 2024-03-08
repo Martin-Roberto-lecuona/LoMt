@@ -44,6 +44,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
+          path: ./_site
           name: github-pages
       
   # Deployment job
