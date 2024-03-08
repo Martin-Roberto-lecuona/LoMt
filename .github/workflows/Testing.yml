@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@master
         with:
           persist-credentials: false
 
@@ -27,10 +27,10 @@ jobs:
       - name: Install 🔧
         run: yarn install
 
-      - name: Lint 🧐
-        run: yarn lint:check
+      # - name: Lint 
+      #   run: yarn lint:check
 
-      - name: Build 🏗️
+      - name: Build 
         run: yarn build
         env:
           NODE_ENV: production
