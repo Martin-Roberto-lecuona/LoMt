@@ -1,0 +1,29 @@
+name: Testing before deployment
+
+on:
+  pull_request:
+    branches: [ main-test ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 21
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+      - name: Trigger Deployment
+        if: ${{ success() }}
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
