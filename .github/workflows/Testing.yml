@@ -33,13 +33,18 @@ jobs:
 
       - name: Run tests
         run: npm test
+      - name: Configure Git user
+        run: |
+          git config --global user.email "robertlecuona@gmail.com"
+          git config --global user.name "Martin-Roberto-lecuona"
       
       - name: Deploy
         if: ${{ success() }}
         run: npm run deploy
         env:
           CI: false
-          
+
+
       # - name: Deploy
       #   uses: peaceiris/actions-gh-pages@v3
       #   if: ${{ success() }} && {github.ref == 'refs/heads/main'}
