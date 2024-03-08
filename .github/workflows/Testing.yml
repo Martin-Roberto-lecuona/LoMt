@@ -2,7 +2,7 @@ name: Testing before deployment
 
 on:
   push:
-    branches: [ main ]
+    branches: [ gh-pages ]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -20,11 +20,4 @@ jobs:
 
       - name: Run tests
         run: npm test
-      - name: Trigger Deployment
-        if: ${{ success() }}
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: gh-pages
-          folder: build
-          token: ${{ secrets.GITHUB_TOKEN }}
       
