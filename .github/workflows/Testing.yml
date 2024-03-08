@@ -2,22 +2,48 @@ name: Testing before deployment
 
 on:
   push:
-    branches: [ gh-pages ]
+    branches: main
+    paths-ignore:
+      - "**.md"
+
+  pull_request:
+    branches: main
+    paths-ignore:
+      - "**.md"
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 21
+      
+          - name: Install 🔧
+        run: yarn install
+
+      - name: Lint 🧐
+        run: yarn lint:check
+
+      - name: Build 🏗️
+        run: yarn build
+        env:
+          NODE_ENV: production
 
       - name: Install dependencies
         run: npm install
 
       - name: Run tests
         run: npm test
-      
+
+      - name: Deploy to GitHub Pages
+        if: ${{ success() }} && ${{ github.event_name != 'pull_request' }}
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist

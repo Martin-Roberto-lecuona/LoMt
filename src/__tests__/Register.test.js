@@ -150,5 +150,12 @@ describe('Register Inputs tests', () => {
     fireEvent.change(confirmPasswordInput, { target: { value: 'Password123a' } });
     expect(screen.getByTestId('wrong-confirm-password')).toBeInTheDocument();
   });
-  
+  test('FAIL', () => {
+    render(
+      <MockUserContext>
+          <Register />       
+      </MockUserContext>
+    );
+    expect(1).toBe(2)
+  });
 });
