@@ -12,7 +12,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
       pages: write
       id-token: write
     steps:
@@ -29,10 +29,13 @@ jobs:
       
   # Deployment job
   deploy:
-      runs-on: ubuntu-latest
-      
-      steps:
-      - uses: actions/checkout@v2
-  
-      - name: Deploy react application to github pages with gh-pages
-        uses: ShanuDey/deploy-react-to-ghpages@v1.0
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+    - id: build-publish
+      uses: bitovi/github-actions-react-to-github-pages@v1.2.2
+      with:
+        path: build # change to your build folder
