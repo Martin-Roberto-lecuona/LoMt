@@ -37,6 +37,7 @@ function App() {
   };
   return (
       <div className="App">
+        BORRAR ESTO
         {showLogin && <Login setShowLogin={setShowLogin} setShowRegister= {setShowRegister}/>}
         {showRegister && <Register setShowLogin={setShowLogin}  setShowRegister= {setShowRegister}/>}
           {!showLogin && !showRegister  && (
