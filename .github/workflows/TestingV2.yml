@@ -51,6 +51,7 @@ jobs:
         CI: false
       uses: bitovi/github-actions-react-to-github-pages@v1.2.2
       with:
-        path: ./static 
+        # path: ./static 
+        path: .
 
       
