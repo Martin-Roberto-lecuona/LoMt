@@ -13,22 +13,13 @@ export function UserProvider ({ children }){
         mail: '',
       });
       const [isLoggedIn, setIsLoggedIn] = useState(false)
-    //   const subscribe = AuthService.subscribe((user)=>{
-    //     if(user){
-    //         setIsLoggedIn(true)
-    //         setUser(user)
-    //     }
-    //     else{
-    //         setIsLoggedIn(true)
-    //         setUser(null)
-    //     }
-    //   })
-
+      
       const value = {
         user,
         setUser,
         isLoggedIn,
         setIsLoggedIn
+
       }
         return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

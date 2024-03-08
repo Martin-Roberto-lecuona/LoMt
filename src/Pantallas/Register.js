@@ -16,7 +16,7 @@ const Register = ({ setShowLogin, setShowRegister }) => {
     const userNameRef = useRef()
     const errorRef = useRef()
 
-    const {user,setUser} = useUser()
+    const {setUser} = useUser()
 
     const [newUser, setNewUser] = useState({
         username: '',
@@ -40,7 +40,7 @@ const Register = ({ setShowLogin, setShowRegister }) => {
     const [success, setSuccess] = useState(false)
 
     useEffect(() => {
-        userNameRef.current.focus()
+        mailRef.current.focus()
     }, [])
 
     useEffect(() => {
@@ -78,11 +78,11 @@ const Register = ({ setShowLogin, setShowRegister }) => {
             
                 
             const validUserName = await responseUserName.json();
-            if  (validUserName.users.length !=0 && validUserName.users[0].username === userName)
+            if  (validUserName.users.length !==0 && validUserName.users[0].username === userName)
                 throw new Error('User allready exist');
 
             const validUserMail = await responseMail.json();
-            if (validUserMail.users.length !=0 && validUserMail.users[0].email === mail)
+            if (validUserMail.users.length !==0 && validUserMail.users[0].email === mail)
                 throw new Error('Mail allready exist');
             
             setNewUser({username:userName, password:pass, mail:mail})

@@ -6,12 +6,14 @@ import { useUser } from '../Hooks/UserContext';
 
 const APILINK= 'https://dummyjson.com/users'
 
-const Register = ({ setShowLogin, setShowRegister }) => {
+const Login = ({ setShowLogin, setShowRegister }) => {
 
   const userRef = useRef()
   const errorRef = useRef()
 
   const {user,setUser} = useUser()
+
+  const [checkedRemember, setCheckedRemember] = useState(false)
 
   const [errMsg, setErrMsg] = useState('')
   const [success, setSuccess] = useState(false)
@@ -46,19 +48,17 @@ const Register = ({ setShowLogin, setShowRegister }) => {
       const validUser = await response.json();  
       if  (!validUser.users.length || validUser.users[0].username !== user.username || validUser.users[0].password !== user.password)
         throw new Error('User not found');
-      
-    //   setUser(prev => ({
-    //     ...prev,
-    //     mail: validUser.users[0].email,})
-    //     )
 
     setUser({...user, mail: validUser.users[0].email});
-    const aux = JSON.stringify(user)
-    const  userData = JSON.parse(aux);
-    userData.mail = validUser.users[0].email
-    /// arreglo temporal para guardar el mail en el localStorage
-    /// ver como hacer para que renderice el setUser antes de que lo intente guardar en el localStorage
-    localStorage.setItem('user', JSON.stringify(userData)); 
+    /// Como hacer para que renderice el setUser antes que guardar en el localStorage
+
+    if(checkedRemember){
+        const aux = JSON.stringify(user)
+        const  userData = JSON.parse(aux);
+        userData.mail = validUser.users[0].email
+        /// arreglo temporal para guardar el mail en el localStorage
+        localStorage.setItem('user', JSON.stringify(userData)); 
+    }
     setSuccess(true);
     setShowLogin(false);
       
@@ -78,6 +78,10 @@ const Register = ({ setShowLogin, setShowRegister }) => {
           [e.target.id]: e.target.value.trim(),
       })
   }
+  const handleChangeRememberMe = () => {
+    setCheckedRemember(!checkedRemember);
+    // console.log('Entra a handle')
+  }; 
 
   return (
       <div className={styles.register}>
@@ -85,10 +89,6 @@ const Register = ({ setShowLogin, setShowRegister }) => {
               <section>
                   <FadeTransition duration={2}></FadeTransition>
                   <h1> You are logged in! </h1>
-                  <br />
-                  <p>
-                      <a href='/' >Go to Home</a>
-                  </p>
               </section>
           ) : (
               <div>
@@ -116,20 +116,26 @@ const Register = ({ setShowLogin, setShowRegister }) => {
                           className={styles.input}
                           title='Password'
                       />
-
                       <button className={styles.button}> Sign In </button> 
                   </form>
+                  <p className={styles.rememberme}> 
+                    <input 
+                        type="checkbox" 
+                        className={styles.checkBox} 
+                        onChange={handleChangeRememberMe}/> 
+                    remember me?
+                </p>
+                
                   <p>
-                      
                       Don&apos;t have an account?                        
-                      <span className='line' onClick={handleRegisterClick} > <a>Register</a> </span>
+                      <span className='line' onClick={handleRegisterClick} > <a>Register </a> </span>
                   </p>
 
               </div>
           )}
-          
+          {/* {console.log("Fuera", checkedRemember)} */}
       </div>
   )
 }
 
-export default Register
+export default Login

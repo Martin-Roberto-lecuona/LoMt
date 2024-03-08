@@ -29,7 +29,7 @@ function App() {
     setShowClients(activeState === 'clients') ,
     setShowSettings(activeState === 'settings')
   );
-  const {user,setUser} = useUser()
+  const {user,setUser,checkedRemember} = useUser()
   
   const handleLogout = () => {
     setUser({ username: '', password: '', mail: ''});

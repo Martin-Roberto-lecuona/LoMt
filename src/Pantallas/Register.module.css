@@ -149,3 +149,25 @@
     opacity: 1;
     visibility: visible;
 }
+
+.rememberme {
+    display: flex;
+    flex-direction: row; 
+    align-items: center; 
+    margin-bottom: 5px; 
+    margin-top: 5px; 
+    font-size: 14px;
+
+}
+
+.rememberme .checkBox {
+    width: 15px;
+    height: 15px;
+    margin-left: 0px;
+    margin-right: 8px;
+    margin-bottom: 5px; 
+    margin-top: 5px; 
+    padding: 0px;
+    cursor: pointer;
+    justify-content: center;
+}
