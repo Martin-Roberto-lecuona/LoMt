@@ -4,10 +4,12 @@ import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './Register.module.css'
 import { useUser } from '../Hooks/UserContext';
+import validator from 'email-validator';
 
-const MAIL_REGEX = /^[[a-z]|[A-Z]|[0-9]]+(?:\\.[[a-z]|[A-Z]|[0-9]]+)*@[[a-z]|[A-Z]|[0-9]]+(?:\\.[[a-z]|[A-Z]|[0-9]]+)*$/;
+// const MAIL_REGEX = /^[[a-z]|[A-Z]|[0-9]]+(?:\\.[[a-z]|[A-Z]|[0-9]]+)*@[[a-z]|[A-Z]|[0-9]]+(?:\\.[[a-z]|[A-Z]|[0-9]]+)*$/;
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
-const PASS_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!'#$%]){8,24}/;
+const PASS_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!'#$%]).{8,24}$/
+
 const APILINK= 'https://dummyjson.com/users'
 
 const Register = ({ setShowLogin, setShowRegister }) => {
@@ -44,8 +46,12 @@ const Register = ({ setShowLogin, setShowRegister }) => {
     }, [])
 
     useEffect(() => {
-        const result = MAIL_REGEX.test(mail)
-        setValidMail(result)
+        if(validator.validate(mail)){
+            setValidMail(true)
+            setMail(mail.toLowerCase())
+        }else{
+            setValidMail(false)
+        }
     }, [mail])
 
     useEffect(() => {
@@ -140,8 +146,9 @@ const Register = ({ setShowLogin, setShowRegister }) => {
                             className={styles.input}
                             title='Valid mail is needed.'
                         />
-                        {!validMail && mail && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} />}
-                        {validMail && mail && <FontAwesomeIcon icon={faCheck} className={styles.iconRight}  />}
+                        {!validMail && mail && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} data-testid='wrong-mail'/>}
+                        {validMail && mail && <FontAwesomeIcon icon={faCheck} className={styles.iconRight} data-testid='right-mail'/>}
+
                         <label htmlFor='username' className={styles.label}>Username: </label>
                         <input
                             type='text'
@@ -154,8 +161,8 @@ const Register = ({ setShowLogin, setShowRegister }) => {
                             className={styles.input}
                             title='4-24 characters.<br />Must begin with a letter.<br />Letters, numbers, underscores, hyphens allowed.'
                         />
-                        {!validName && userName && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} />}
-                        {validName && userName && <FontAwesomeIcon icon={faCheck} className={styles.iconRight} />}
+                        {!validName && userName && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} data-testid='wrong-username'/>}
+                        {validName && userName && <FontAwesomeIcon icon={faCheck} className={styles.iconRight} data-testid='right-username'/>}
 
                         <label htmlFor='password' className={styles.label}>Password: </label>
                         <input
@@ -167,8 +174,8 @@ const Register = ({ setShowLogin, setShowRegister }) => {
                             className={styles.input}
                             title='8-24 characters.<br />Must include uppercase and lowercase letters, a number and a special character.<br />Allowed special characters: !#$%'
                         />
-                        {!validPass && pass && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} />}
-                        {validPass && pass && <FontAwesomeIcon icon={faCheck} className={styles.iconRight} />}
+                        {!validPass && pass && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} data-testid='wrong-password'/>}
+                        {validPass && pass && <FontAwesomeIcon icon={faCheck} className={styles.iconRight} data-testid='right-password'/>}
 
                         <label htmlFor='passwordConfirm' className={styles.label}>Confirm Password: </label>
                         <input
@@ -180,8 +187,8 @@ const Register = ({ setShowLogin, setShowRegister }) => {
                             className={styles.input}
                             title='Must be the same as the password'
                         />
-                        {!validMatch && matchPass && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} />}
-                        {validMatch && matchPass && <FontAwesomeIcon icon={faCheck} className={styles.iconRight} />}
+                        {!validMatch && matchPass && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} data-testid='wrong-confirm-password'/>}
+                        {validMatch && matchPass && <FontAwesomeIcon icon={faCheck} className={styles.iconRight} data-testid='right-confirm-password'/>}
 
                         <button disabled={!validMail || !validName || !validPass || !validMatch} className={styles.button}> Create account </button>
                     </form>

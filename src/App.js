@@ -11,7 +11,6 @@ import FadeTransition from './Componentes/FadeTransition'
 import { useState  } from 'react'
 import React from 'react';
 import { UserProvider, useUser } from './Hooks/UserContext';
-import axios from "axios";
 
 function App() {
   const [showLogin, setShowLogin] = useState(true);
