@@ -43,13 +43,14 @@ jobs:
     # - id: build-publish
       env:
         CI: false
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+    # - name: Deploy to GitHub Pages
+    #   uses: peaceiris/actions-gh-pages@v3
+    #   with:
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     publish_dir: ./static
+    - id: build-publish
+      uses: bitovi/github-actions-react-to-github-pages@v1.2.2
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./static
-      # uses: bitovi/github-actions-react-to-github-pages@v1.2.2
-      # with:
-      #   path: build # change to your build folder
+        path: ./static 
 
       
