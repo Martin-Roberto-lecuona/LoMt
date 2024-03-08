@@ -1,49 +1,43 @@
-name: Testing before deployment
+name: GitHub Pages
 
 on:
   push:
-    branches: main
-    paths-ignore:
-      - "**.md"
-
+    branches:
+      - main
   pull_request:
-    branches: main
-    paths-ignore:
-      - "**.md"
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@master
-        with:
-          persist-credentials: false
 
-      - name: Set up Node.js
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 21
-      
-      - name: Install 🔧
-        run: yarn install
+          node-version: '21'
 
-      # - name: Lint 
-      #   run: yarn lint:check
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      - name: Build 
-        run: yarn build
-        env:
-          NODE_ENV: production
-
-      # - name: Install dependencies
-      #   run: npm install
+      - run: npm ci
+      - run: npm run build
 
       - name: Run tests
         run: npm test
 
-      - name: Deploy to GitHub Pages
-        if: ${{ success() }} && ${{ github.event_name != 'pull_request' }}
+      - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
+        if: if: ${{ success() }} && {github.ref == 'refs/heads/main'}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: dist
+          publish_dir: ./public
