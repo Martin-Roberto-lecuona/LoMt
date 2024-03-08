@@ -41,14 +41,14 @@ jobs:
       with:
         ref: 'gh-pages' 
     # - id: build-publish
-      env:
-        CI: false
     # - name: Deploy to GitHub Pages
     #   uses: peaceiris/actions-gh-pages@v3
     #   with:
-    #     github_token: ${{ secrets.GITHUB_TOKEN }}
-    #     publish_dir: ./static
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./static
     - id: build-publish
+      env:
+        CI: false
       uses: bitovi/github-actions-react-to-github-pages@v1.2.2
       with:
         path: ./static 
