@@ -1,7 +1,7 @@
 name: Testing before deployment
 
 on:
-  pull_request:
+  push:
     branches: [ main ]
 jobs:
   test:
