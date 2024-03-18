@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Register from '../Pantallas/Register';
+import Profile from '../Pantallas/Profile';
 import { UserProvider, UserContext } from '../Hooks/UserContext';
 import { useRef, useState, useEffect } from 'react'
 
@@ -18,11 +18,11 @@ const MockUserContext = ({ children }) => {
   );
 };
 
-describe('Register Inputs tests', () => {
+describe('Profile Inputs tests', () => {
   test('Checking valid email', () => {
     render(
       <MockUserContext>
-          <Register />       
+          <Profile />       
       </MockUserContext>
     );
     const emailInput = screen.getByLabelText('E-mail:');
@@ -44,7 +44,7 @@ describe('Register Inputs tests', () => {
   test('Checking valid UserName', () => {
     render(
       <MockUserContext>
-          <Register />       
+          <Profile />       
       </MockUserContext>
     );
     const emailInput = screen.getByLabelText('Username:');
@@ -79,7 +79,7 @@ describe('Register Inputs tests', () => {
   test('Checking valid Password', () => {
     render(
       <MockUserContext>
-          <Register />       
+          <Profile />       
       </MockUserContext>
     );
     const passwordInput = screen.getByLabelText('Password:');
@@ -114,7 +114,7 @@ describe('Register Inputs tests', () => {
   test('Checking valid Confirm Password', () => {
     render(
       <MockUserContext>
-          <Register />       
+          <Profile />       
       </MockUserContext>
     );
     const passwordInput = screen.getByLabelText('Password:');
@@ -141,7 +141,7 @@ describe('Register Inputs tests', () => {
   // test('FAIL', () => {
   //   render(
   //     <MockUserContext>
-  //         <Register />       
+  //         <Profile />       
   //     </MockUserContext>
   //   );
   //   expect(1).toBe(2)
