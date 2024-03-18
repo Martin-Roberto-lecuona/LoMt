@@ -13,13 +13,12 @@ import React from 'react';
 import { UserProvider, useUser } from './Hooks/UserContext';
 
 function App() {
-  const [showLogin, setShowLogin] = useState(true);
-  const [showRegister, setShowRegister] = useState(false);
   const [showHome, setShowHome] = useState(true);
   const [showProfile, setShowProfile] = useState(false);
   const [showClients, setShowClients] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   
+  const {user,setUser,checkedRemember,showLogin,showRegister,setShowLogin} = useUser()
 
   const generateToggleFunction = (activeState) =>(
     activeState=activeState.toLowerCase(),
@@ -28,7 +27,6 @@ function App() {
     setShowClients(activeState === 'clients') ,
     setShowSettings(activeState === 'settings')
   );
-  const {user,setUser,checkedRemember} = useUser()
   
   const handleLogout = () => {
     setUser({ username: '', password: '', mail: ''});
@@ -37,8 +35,8 @@ function App() {
   };
   return (
       <div className="App">
-        {showLogin && <Login setShowLogin={setShowLogin} setShowRegister= {setShowRegister}/>}
-        {showRegister && <Register setShowLogin={setShowLogin}  setShowRegister= {setShowRegister}/>}
+        {showLogin && <Login/>}
+        {showRegister && <Register/>}
           {!showLogin && !showRegister  && (
           <FadeTransition>
           <Navbar 

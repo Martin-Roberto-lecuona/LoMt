@@ -6,12 +6,12 @@ import { useUser } from '../Hooks/UserContext';
 
 const APILINK= 'https://dummyjson.com/users'
 
-const Login = ({ setShowLogin, setShowRegister }) => {
+const Login = () => {
 
   const userRef = useRef()
   const errorRef = useRef()
 
-  const {user,setUser} = useUser()
+  const {user,setUser, setShowLogin, setShowRegister} = useUser()
 
   const [checkedRemember, setCheckedRemember] = useState(false)
 
