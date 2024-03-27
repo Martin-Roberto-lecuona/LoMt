@@ -9,6 +9,10 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.30",
+    "@types/react": "^18.2.70",
+    "@types/react-dom": "^18.2.22",
     "axios": "^1.6.7",
     "email-validator": "^2.0.4",
     "gh-pages": "^6.1.1",
@@ -19,6 +23,7 @@
     "react-responsive": "^9.0.2",
     "react-scripts": "5.0.1",
     "react-scroll": "^1.9.0",
+    "typescript": "^5.4.3",
     "web-vitals": "^2.1.4"
   },
   "homepage": "https://martin-roberto-lecuona.github.io/LoMt/",

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import styles from './Profile.module.css';
-import { useUser } from '../Hooks/UserContext';
+import styles from '../styles/Profile.css';
 import NewUserSetter from '../Hooks/NewUserSetter'
 
 const Profile = () => {

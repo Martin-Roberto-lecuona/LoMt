@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRef, useState, useEffect, useContext } from 'react'
-import styles from './Register.module.css'
+import '../styles/Register.css'
 import FadeTransition from '../Componentes/FadeTransition'
 import { useUser } from '../Hooks/UserContext';
 
@@ -84,7 +84,7 @@ const Login = () => {
   }; 
 
   return (
-      <div className={styles.register}>
+      <div className="register">
           {success ? (
               <section>
                   <FadeTransition duration={2}></FadeTransition>
@@ -95,7 +95,7 @@ const Login = () => {
                   <p ref={errorRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>{errMsg}</p>
                   <h1>Login</h1>
                   <form onSubmit={handleSubmit}>
-                      <label htmlFor='username' className={styles.label}>Username: </label>
+                      <label htmlFor='username' className="label">Username: </label>
                       <input
                           type='text'
                           id='username'
@@ -103,25 +103,25 @@ const Login = () => {
                           autoComplete='off'
                           onChange={handleChange}
                           required
-                          className={styles.input}
+                          className="input"
                           title='User'
                       />
 
-                      <label htmlFor='password' className={styles.label}>Password: </label>
+                      <label htmlFor='password' className="label">Password: </label>
                       <input
                           type='password'
                           id='password'
                           onChange={handleChange}
                           required
-                          className={styles.input}
+                          className="input"
                           title='Password'
                       />
-                      <button className={styles.button}> Sign In </button> 
+                      <button className="button"> Sign In </button> 
                   </form>
-                  <p className={styles.rememberme}> 
+                  <p className="rememberme"> 
                     <input 
                         type="checkbox" 
-                        className={styles.checkBox} 
+                        className="checkBox"
                         onChange={handleChangeRememberMe}/> 
                     remember me?
                 </p>

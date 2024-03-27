@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './Register.module.css'
+import '../styles/Register.css'
 import { useUser } from '../Hooks/UserContext';
 import NewUserSetter from '../Hooks/NewUserSetter'
 
@@ -12,7 +12,7 @@ const Register = () => {
 	
 	const {setShowLogin, setShowRegister} = useUser()
   return (
-    <div className={styles.register}>
+    <div className="register">
         <NewUserSetter Title="Register" buttonText="Create account" isUpdate={true}/>
         <p>
           Already have an account?

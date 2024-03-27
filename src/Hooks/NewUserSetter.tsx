@@ -1,45 +1,56 @@
 import React from 'react'
 import { useRef, useState, useEffect } from 'react'
-import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styles from '../Pantallas/Register.module.css'
-import { useUser } from './UserContext';
+import '../styles/Register.css'
+import { useUser, UserType } from './UserContext';
 import validator from 'email-validator';
 
 import {USER_REGEX,PASS_REGEX,APILINK} from '../constants'
 
-const NewUserSetter = ({Title, buttonText,isUpdate}) => {
+interface  Props{
+  Title: string;
+  buttonText:string;
+  isUpdate?:boolean;
+}
+
+const NewUserSetter = ({Title, buttonText,isUpdate}:Props) => {
   
-  const mailRef = useRef()
-  const userNameRef = useRef()
-  const errorRef = useRef()
+  const mailRef = useRef<HTMLInputElement>(null)
+  const userNameRef = useRef<HTMLInputElement>(null)
+  const errorRef = useRef<HTMLInputElement>(null)
 
   const {user,setUser,setShowLogin, setShowRegister} = useUser()
 
-  const [newUser, setNewUser] = useState({
+  const [newUser, setNewUser] = useState<UserType>({
     username: user.username || '',
     password: user.password || '',
     mail: user.mail || '',
     });
 
-  const [mail, setMail] = useState(newUser.mail)
-  const [validMail, setValidMail] = useState(false)
+  const [mail, setMail] = useState<string>(newUser.mail)
+  const [validMail, setValidMail] = useState<boolean>(false)
   
-  const [userName, setUserName] = useState(newUser.username)
-  const [validName, setValidName] = useState(false)
+  const [userName, setUserName] = useState<string>(newUser.username)
+  const [validName, setValidName] = useState<boolean>(false)
 
-  const [pass, setPass] = useState()
-  const [validPass, setValidPass] = useState(false)
+  const [pass, setPass] = useState<string>('')
+  const [validPass, setValidPass] = useState<boolean>(false)
 
-  const [matchPass, setMatchPass] = useState('')
-  const [validMatch, setValidMatch] = useState(false)
+  const [matchPass, setMatchPass] = useState<string>('')
+  const [validMatch, setValidMatch] = useState<boolean>(false)
 
-  const [errMsg, setErrMsg] = useState('')
-  const [success, setSuccess] = useState(false)
+  const [errMsg, setErrMsg] = useState<string>('')
+  const [success, setSuccess] = useState<boolean>(false)
 
   useEffect(() => {
-    mailRef.current.focus()
-  }, [])
+    setTimeout(() => {
+      if (mailRef.current) {
+        mailRef.current.focus();
+      }
+    }, 0);
+  }, []);
+  
 
   useEffect(() => {
     if(validator.validate(mail)){
@@ -66,7 +77,8 @@ const NewUserSetter = ({Title, buttonText,isUpdate}) => {
     setErrMsg('')
   }, [userName, pass])
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+    // isUpdate will change this function
     e.preventDefault()
     const controller = new AbortController();
     try {
@@ -105,20 +117,22 @@ const NewUserSetter = ({Title, buttonText,isUpdate}) => {
       setShowRegister(false)
 
       } catch (error) {
-        console.log(error.message);
-        setErrMsg(error.message);
-        setSuccess(false);
+        if (error instanceof Error){
+          console.log(error.message);
+          setErrMsg(error.message);
+          setSuccess(false);
+        }
       }
   }
   
   return (
-    <div className={styles.register}>
+    <div className="register">
       
         <div>
           <p ref={errorRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>{errMsg}</p>
           <h1>{Title}</h1>
           <form onSubmit={handleSubmit}>
-          <label htmlFor='email' className={styles.label}>E-mail: </label>
+          <label htmlFor='email' className="label">E-mail: </label>
             <input
               type='email'
               id='email'
@@ -127,13 +141,13 @@ const NewUserSetter = ({Title, buttonText,isUpdate}) => {
               onChange={(e) => setMail(e.target.value)}
               value={mail}
               required
-              className={styles.input}
+              className="input"
               title='Valid mail is needed.'
             />
-            {!validMail && mail && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} data-testid='wrong-mail'/>}
-            {validMail && mail && <FontAwesomeIcon icon={faCheck} className={styles.iconRight} data-testid='right-mail'/>}
+            {!validMail && mail && <FontAwesomeIcon icon={faTimes} className="iconWrong" data-testid='wrong-mail'/>}
+            {validMail && mail && <FontAwesomeIcon icon={faCheck} className="iconRight" data-testid='right-mail'/>}
 
-            <label htmlFor='username' className={styles.label}>Username: </label>
+            <label htmlFor='username' className="label">Username: </label>
             <input
               type='text'
               id='username'
@@ -142,39 +156,39 @@ const NewUserSetter = ({Title, buttonText,isUpdate}) => {
               onChange={(e) => setUserName(e.target.value)}
               value={userName}
               required
-              className={styles.input}
+              className="input"
               title='4-24 characters.<br />Must begin with a letter.<br />Letters, numbers, underscores, hyphens allowed.'
             />
-            {!validName && userName && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} data-testid='wrong-username'/>}
-            {validName && userName && <FontAwesomeIcon icon={faCheck} className={styles.iconRight} data-testid='right-username'/>}
+            {!validName && userName && <FontAwesomeIcon icon={faTimes} className="iconWrong" data-testid='wrong-username'/>}
+            {validName && userName && <FontAwesomeIcon icon={faCheck} className="iconRight" data-testid='right-username'/>}
 
-            <label htmlFor='password' className={styles.label}>Password: </label>
+            <label htmlFor='password' className="label">Password: </label>
             <input
               type='password'
               id='password'
               onChange={(e) => setPass(e.target.value)}
               value={pass}
               required
-              className={styles.input}
-              title='8-24 characters.<br />Must include uppercase and lowercase letters, a number and a special character.<br />Allowed special characters: !#$%'
+              className="input"
+              title={`8-24 characters.<br />Must include uppercase and lowercase letters, a number and a special character.<br />Allowed special characters: !#$%`}
             />
-            {!validPass && pass && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} data-testid='wrong-password'/>}
-            {validPass && pass && <FontAwesomeIcon icon={faCheck} className={styles.iconRight} data-testid='right-password'/>}
+            {!validPass && pass && <FontAwesomeIcon icon={faTimes} className="iconWrong" data-testid='wrong-password'/>}
+            {validPass && pass && <FontAwesomeIcon icon={faCheck} className="iconRight" data-testid='right-password'/>}
 
-            <label htmlFor='passwordConfirm' className={styles.label}>Confirm Password: </label>
+            <label htmlFor='passwordConfirm' className="label">Confirm Password: </label>
             <input
               type='password'
               id='passwordConfirm'
               onChange={(e) => setMatchPass(e.target.value)}
               value={matchPass}
               required
-              className={styles.input}
+              className="input"
               title='Must be the same as the password'
             />
-            {!validMatch && matchPass && <FontAwesomeIcon icon={faTimes} className={styles.iconWrong} data-testid='wrong-confirm-password'/>}
-            {validMatch && matchPass && <FontAwesomeIcon icon={faCheck} className={styles.iconRight} data-testid='right-confirm-password'/>}
+            {!validMatch && matchPass && <FontAwesomeIcon icon={faTimes} className="iconWrong" data-testid='wrong-confirm-password'/>}
+            {validMatch && matchPass && <FontAwesomeIcon icon={faCheck} className="iconRight" data-testid='right-confirm-password'/>}
 
-            <button disabled={!validMail || !validName || !validPass || !validMatch} className={styles.button}> {buttonText} </button>
+            <button disabled={!validMail || !validName || !validPass || !validMatch} className="button"> {buttonText} </button>
           </form>
         </div>
     </div>

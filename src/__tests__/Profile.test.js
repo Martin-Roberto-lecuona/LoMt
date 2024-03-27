@@ -1,14 +1,14 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Profile from '../Pantallas/Profile';
-import { UserProvider, UserContext } from '../Hooks/UserContext';
-import { useRef, useState, useEffect } from 'react'
+import { UserProvider } from '../Hooks/UserContext';
+import { useState } from 'react'
 
 const MockUserContext = ({ children }) => {
   const [user, setUser] = useState({
-    username: '',
-    password: '',
-    mail: '',
+    username: 'valid1',
+    password: 'Passw0rd!',
+    mail: 'okMail@example.com',
   });
 
   return (
@@ -17,7 +17,20 @@ const MockUserContext = ({ children }) => {
     </UserProvider>
   );
 };
+describe('Profile default data', () => { 
+  test('Renders User', () => {
+    render(
+      <MockUserContext>
+          <Profile />       
+      </MockUserContext>
+    );
+    const emailInput = screen.getByLabelText('E-mail:');
+    const userInput = screen.getByLabelText('Username:');
+    const passwordInput = screen.getByLabelText('Password:');
+    expect(1).toBe(1);
 
+  });
+ })
 describe('Profile Inputs tests', () => {
   test('Checking valid email', () => {
     render(
@@ -47,32 +60,32 @@ describe('Profile Inputs tests', () => {
           <Profile />       
       </MockUserContext>
     );
-    const emailInput = screen.getByLabelText('Username:');
+    const userInput = screen.getByLabelText('Username:');
 
     // right
-    fireEvent.change(emailInput, { target: { value: 'usu1' } });
+    fireEvent.change(userInput, { target: { value: 'usu1' } });
     expect(screen.getByTestId('right-username')).toBeInTheDocument();
 
-    fireEvent.change(emailInput, { target: { value: 'usuario' } });
+    fireEvent.change(userInput, { target: { value: 'usuario' } });
     expect(screen.getByTestId('right-username')).toBeInTheDocument();
 
-    fireEvent.change(emailInput, { target: { value: 'u1234567890123456789012' } });
+    fireEvent.change(userInput, { target: { value: 'u1234567890123456789012' } });
     expect(screen.getByTestId('right-username')).toBeInTheDocument();
 
     // wrong
-    fireEvent.change(emailInput, { target: { value: '1' } });
+    fireEvent.change(userInput, { target: { value: '1' } });
     expect(screen.getByTestId('wrong-username')).toBeInTheDocument();
 
-    fireEvent.change(emailInput, { target: { value: 'ab' } });
+    fireEvent.change(userInput, { target: { value: 'ab' } });
     expect(screen.getByTestId('wrong-username')).toBeInTheDocument();
 
-    fireEvent.change(emailInput, { target: { value: 'abc' } });
+    fireEvent.change(userInput, { target: { value: 'abc' } });
     expect(screen.getByTestId('wrong-username')).toBeInTheDocument();
 
-    fireEvent.change(emailInput, { target: { value: 'u123456789012345678901234' } });
+    fireEvent.change(userInput, { target: { value: 'u123456789012345678901234' } });
     expect(screen.getByTestId('wrong-username')).toBeInTheDocument();
 
-    fireEvent.change(emailInput, { target: { value: '123456' } });
+    fireEvent.change(userInput, { target: { value: '123456' } });
     expect(screen.getByTestId('wrong-username')).toBeInTheDocument();
   });
 
@@ -138,12 +151,7 @@ describe('Profile Inputs tests', () => {
     fireEvent.change(confirmPasswordInput, { target: { value: 'Password123a' } });
     expect(screen.getByTestId('wrong-confirm-password')).toBeInTheDocument();
   });
-  // test('FAIL', () => {
-  //   render(
-  //     <MockUserContext>
-  //         <Profile />       
-  //     </MockUserContext>
-  //   );
-  //   expect(1).toBe(2)
-  // });
+});
+test.skip('FAIL', () => {
+  expect(1).toBe(2)
 });

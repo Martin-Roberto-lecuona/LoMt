@@ -1,6 +1,6 @@
 
-import './App.css';
-import Home from './Pantallas/Home';
+import './styles/App.css';
+import Home from './Pantallas/Home.tsx';
 import Navbar from './Componentes/Navbar';
 import Clients from './Pantallas/Clients';
 import Settings from './Pantallas/Settings';
