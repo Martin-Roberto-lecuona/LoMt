@@ -5,14 +5,11 @@ import { useUser, UserType } from '../Hooks/UserContext';
 const Home: React.FC<{}> = () => { 
   const { user }: { user: UserType } = useUser();
   return (
-    <div className="home" data-testid="home">
+    <div className='home' data-testid='home'>
       Home
-      <br />
-      <>USER: {user.username}</>
-      <br />
-      <>PASS: {user.password}</>
-      <br />
-      <>MAIL: {user.mail}</>
+      <div data-testid='USER' >USER: {user.username}</div>
+      <div data-testid='PASS' >PASS: {user.password}</div>
+      <div data-testid='MAIL' >MAIL: {user.mail}</div>
     </div>
   )
 }
