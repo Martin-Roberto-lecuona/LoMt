@@ -1,6 +1,6 @@
 
 import './styles/App.css';
-import Home from './Pantallas/Home.tsx';
+import Home from './Pantallas/Home';
 import Navbar from './Componentes/Navbar';
 import Clients from './Pantallas/Clients';
 import Settings from './Pantallas/Settings';
@@ -10,7 +10,8 @@ import Profile from './Pantallas/Profile'
 import FadeTransition from './Componentes/FadeTransition'
 import { useState  } from 'react'
 import React from 'react';
-import { UserProvider, useUser } from './Hooks/UserContext';
+import { useUser } from './Hooks/UserContext';
+
 
 function App() {
   const [showHome, setShowHome] = useState(true);
@@ -18,9 +19,9 @@ function App() {
   const [showClients, setShowClients] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   
-  const {user,setUser,checkedRemember,showLogin,showRegister,setShowLogin} = useUser()
+  const {user,setUser,showLogin,showRegister,setShowLogin} = useUser()
 
-  const generateToggleFunction = (activeState) =>(
+  const generateToggleFunction = (activeState:string) =>(
     activeState=activeState.toLowerCase(),
     setShowHome(activeState === 'home'),  
     setShowProfile(activeState === 'profile'),
@@ -31,6 +32,10 @@ function App() {
   const handleLogout = () => {
     setUser({ username: '', password: '', mail: ''});
     setShowLogin(true)
+    setShowHome(true)
+    setShowProfile(false)
+    setShowClients(false)
+    setShowSettings(false)
     localStorage.clear();
   };
   return (
