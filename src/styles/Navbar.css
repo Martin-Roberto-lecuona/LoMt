@@ -1,16 +1,3 @@
-.navBarOpen{
-    display: flex;
-    align-items: start;
-    position: fixed;
-    height: 100%;
-    width: 15%;
-    min-width:  190px;
-    background-color: #F9F7F7;
-    flex-direction: column;
-    padding-top: 10px;
-    border-width: 20px;
-    transition: width 0.3s ease-out;
-}
 
 .navBar{
     display: flex;
@@ -30,7 +17,7 @@
     justify-content: right;
     cursor: pointer;
     padding-left: 25px;
-
+    list-style-type: none;
 }
 .navBarLink{
     display: flex ;
@@ -42,52 +29,92 @@
     justify-content: space-between;
     margin-left: 2px;
 }
+.navBarLinkText {
+    display: none; /* Ocultar por defecto */
+    transform: translateX(1%); 
+    justify-content: right;
+}
 .logo
-{
+{   
     display: flex;
     justify-content: start center;
     margin-left: 20%;
     align-items: start top;
     margin-bottom: 20px;
-
-}
-.LinkContainer,
-.LinkContainerTop {
-  list-style-type: none;
-}
-.LinkContainerTop{
-    display: flex;
-    align-items: start;
-    flex-direction: row;
-    padding-left: 20px;
-    justify-content: space-evenly;
 }
 
-.navBarOnTop{
+.logo img {
+    cursor: pointer;
+}
+
+.logo img:hover {
+    transform: scale(1.1);
+}
+.navBar:hover{
     display: flex;
     align-items: start;
-    position: '-webkit-sticky';
-    flex-direction: row;
-    height: 10%;
-    width: 100%;
-    min-height: 65px;
+    position: fixed;
+    height: 100%;
+    width: 15%;
+    min-width:  190px;
     background-color: #F9F7F7;
+    flex-direction: column;
+    padding-top: 10px;
+    border-width: 20px;
     transition: width 0.3s ease-out;
 }
-.navBarLinkTop{
-    display: flex ;
-    font-size: 1.3em;
-    font-weight: 500;
-    color: #3F72AF;
-    padding-top: 5px;
-    padding-left: 5px;
-    justify-content: space-between;
-    margin-left: 15px;
+.navBar:hover .navBarLinkText {
+    display: block; 
 }
-.logoOnTop{
-    display: flex;
-    justify-content: start;
-    margin-left: 3%;
-    padding-top: 0px;
-    margin-top: 10px;
+
+/* ON TOP */
+@media screen and (max-width: 650px) {
+    .LinkContainer{
+        list-style-type: none;
+        display: flex;
+        align-items: start;
+        flex-direction: row;
+        padding-left: 20px;
+        justify-content: space-evenly;
+    }
+
+    .navBar:hover, .navBar{
+        display: flex;
+        align-items: start;
+        position: '-webkit-sticky';
+        flex-direction: row;
+        height: 10%;
+        width: 100%;
+        min-height: 65px;
+        background-color: #F9F7F7;
+        transition: width 0.3s ease-out;
+    }
+    .navBarLink{
+        display: flex ;
+        font-size: 1.3em;
+        font-weight: 500;
+        color: #3F72AF;
+        padding-top: 5px;
+        padding-left: 5px;
+        justify-content: space-between;
+        margin-left: 15px;
+    }
+    .logo{
+        height: 50px;
+        display: flex;
+        justify-content: start;
+        margin-left: 3%;
+        padding-top: 0px;
+        margin-top: 5px;
+    }
+    .logo img:hover {
+        transform: none;
+    }
+
+    .navBarLinkText{
+        display: none;
+    }
+    .navBar:hover .navBarLinkText {
+        display: none;
+    }
 }

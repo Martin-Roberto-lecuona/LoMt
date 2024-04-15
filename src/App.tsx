@@ -51,7 +51,7 @@ function App() {
             toggleSettingsScreen= {() =>  {generateToggleFunction('settings')}}
             handleLogout=         {handleLogout}
           />
-
+  
           {showHome && <Home />}
           {showProfile && <Profile/>}
           {showClients && <Clients />}

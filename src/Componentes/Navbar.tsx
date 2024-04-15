@@ -1,4 +1,4 @@
-import React, { useState, useEffect, MouseEvent } from 'react';
+import React from 'react';
 import { Link } from 'react-scroll';
 import '../styles/Navbar.css';
 import { IoHomeSharp } from "react-icons/io5";
@@ -24,19 +24,7 @@ interface NavbarProps {
   handleLogout: () => void,
 }
 
-interface WindowSize {
-  width: number;
-  height: number;
-}
-
 const Navbar: React.FC<NavbarProps> = ({ toggleHomeScreen, toggleProfileScreen, toggleClientsScreen, toggleSettingsScreen, handleLogout }) => {
-  const [navBarOpen, setNavBarOpen] = useState<boolean>(false);
-  const [navBarOnTop, setNavBarOnTop] = useState<boolean>(false);
-  const [windowDimension, setWindowDimension] = useState<WindowSize>({
-    width: window.innerWidth,
-    height: window.innerHeight
-  });
-
   const links: NavLink[] = [
     { id: 1, link: "Home", logo: <IoHomeSharp size={24} />, action: toggleHomeScreen },
     { id: 2, link: "Profile", logo: <FaUserCircle size={24} />, action: toggleProfileScreen },
@@ -45,54 +33,13 @@ const Navbar: React.FC<NavbarProps> = ({ toggleHomeScreen, toggleProfileScreen, 
     { id: 5, link: "LogOut", logo: <CgLogOut size={24} />, action: handleLogout }
   ];
 
-  const handleLinkHover = () => {
-    if (!navBarOnTop)
-      setNavBarOpen(true);
-  };
-
-  const handleLinkLeave = () => {
-    if (!navBarOnTop)
-      setNavBarOpen(false);
-  };
-
-  const detectDimension = () => {
-    setWindowDimension({
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-  };
-
-  useEffect(() => {
-    windowDimension.width < 650 ? setNavBarOnTop(true) : setNavBarOnTop(false);
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('resize', detectDimension);
-	if (windowDimension.width < 650) {
-		setNavBarOnTop(true);
-		setNavBarOpen(false);
-	} else
-		setNavBarOnTop(false);
-	
-    return () => { window.removeEventListener('resize', detectDimension) };
-  }, [windowDimension]);
-
-  const renderLogo = (size: string, className: string) => (
-    <p className={className}>
-      <img src={logoLomt} onClick={() => toggleHomeScreen()} height={size} alt='Logo-LoMt' />
-    </p>
-  );
-
   return (
-    <div className={!navBarOnTop ? (navBarOpen ? 'navBarOpen' : 'navBar') : 'navBarOnTop'}
-      onMouseOver={handleLinkHover} onMouseLeave={handleLinkLeave}>
-      <>
-        {navBarOpen && renderLogo('100px', 'logo')}
-        {!navBarOpen && !navBarOnTop && renderLogo('60px', 'logo')}
-        {navBarOnTop && renderLogo('50px', 'logoOnTop')}
-      </>
+    <div className={'navBar'}>
+      <p className={'logo'}>
+        <img src={logoLomt} onClick={() => toggleHomeScreen()} height = '60px' alt='Logo-LoMt' />
+      </p>
 
-      <ul className={navBarOnTop ? 'LinkContainerTop' : 'LinkContainer'}>
+      <ul className={'LinkContainer'}>
         {links.map(({ id, link, logo, action }) => (
           <li key={id}>
             <Link
@@ -100,8 +47,8 @@ const Navbar: React.FC<NavbarProps> = ({ toggleHomeScreen, toggleProfileScreen, 
               to={link}
               smooth
               duration={100}
-              className={navBarOnTop ? 'navBarLinkTop' : 'navBarLink'}>
-              {logo} {navBarOpen && <span>{link}</span>}
+              className={'navBarLink'}>
+              {logo} <span className={'navBarLinkText'}>{link}</span>
             </Link>
           </li>
         ))}

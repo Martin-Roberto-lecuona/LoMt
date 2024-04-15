@@ -2,3 +2,8 @@
     height: 1000px;
     background-color: violet;
 }
+@media screen and (max-width: 650px){
+    .home{
+        padding-top: 90px;
+    }
+}
