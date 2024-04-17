@@ -3,3 +3,13 @@ export const PASS_REGEX : RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!'#$
 export const APILINK    : string= 'https://dummyjson.com/users'
 export type  color      = 'fondo'|'claro'|'oscuro'|'basico';
 export type  sizeButton = 'pequeño'|'chico'|'mediano'|'grande';
+export interface Inputs {
+    id: number,
+    showName: string,
+    type: string,
+    idInput: string,
+    action: React.ChangeEventHandler<HTMLInputElement> ,
+    value: string,
+    title: string,
+}
+

@@ -4,7 +4,8 @@ import '../styles/Register.css'
 import FadeTransition from '../Componentes/FadeTransition'
 import { useUser, UserType } from '../Hooks/UserContext';
 
-const APILINK= 'https://dummyjson.com/users'
+
+import {APILINK} from '../constants'
 
 const Login = () => {
 
@@ -85,7 +86,6 @@ const Login = () => {
   setCheckedRemember(!checkedRemember);
   // console.log('Entra a handle')
   }; 
-
   return (
     <div className="register">
       {success ? (

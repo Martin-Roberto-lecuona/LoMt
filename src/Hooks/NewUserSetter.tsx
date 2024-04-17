@@ -5,13 +5,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import '../styles/Register.css'
 import { useUser, UserType } from './UserContext';
 import validator from 'email-validator';
+import IconRightOrWrong from '../Componentes/IconRightOrWrong'
 
-import {USER_REGEX,PASS_REGEX,APILINK} from '../constants'
+import {USER_REGEX,PASS_REGEX,APILINK,Inputs} from '../constants'
 
 interface  Props{
   Title: string;
   buttonText:string;
   isUpdate?:boolean;
+}
+interface InputWithCheck extends Inputs{
+  valid: boolean,
+  dataTestIdWrong:string,
+  dataTestIdRight:string,
 }
 
 const NewUserSetter = ({Title, buttonText,isUpdate}:Props) => {
@@ -124,70 +130,47 @@ const NewUserSetter = ({Title, buttonText,isUpdate}:Props) => {
         }
       }
   }
-  
+
+  const inputs: InputWithCheck[] = [
+    { id: 1, showName:'E-mail:' ,type: 'email', idInput: 'email', action: (e) => setMail(e.target.value), value: mail, title: 'Valid mail is needed.'
+      , valid: validMail, dataTestIdWrong:'wrong-mail', dataTestIdRight:'right-mail' },
+
+    { id: 2,showName:'Username:' , type: 'text', idInput: 'username', action: (e) => setUserName(e.target.value), value: userName, title: '4-24 characters. Must begin with a letter. Letters, numbers, underscores, hyphens allowed.'
+      , valid: validName, dataTestIdWrong:'wrong-username', dataTestIdRight:'right-username' },
+
+    { id: 3,showName:'Password:' , type: 'password', idInput: 'password', action: (e) => setPass(e.target.value), value: pass, title: '8-24 characters. Must include uppercase and lowercase letters, a number and a special character. Allowed special characters: !#$%'
+      , valid: validPass, dataTestIdWrong:'wrong-password', dataTestIdRight:'right-password'},
+
+    { id: 4,showName:'Confirm Password:' , type: 'password', idInput: 'passwordConfirm', action: (e) => setMatchPass(e.target.value), value: matchPass, title: 'Must be the same as the password'
+      , valid: validMatch, dataTestIdWrong:'wrong-confirm-password', dataTestIdRight:'right-confirm-password'}
+  ];
   return (
     <div className="register">
-      
         <div>
           <p ref={errorRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>{errMsg}</p>
           <h1>{Title}</h1>
           <form onSubmit={handleSubmit}>
-          <label htmlFor='email' className="label">E-mail: </label>
-            <input
-              type='email'
-              id='email'
-              ref={mailRef}
-              autoComplete='off'
-              onChange={(e) => setMail(e.target.value)}
-              value={mail}
-              required
-              className="input"
-              title='Valid mail is needed.'
-            />
-            {!validMail && mail && <FontAwesomeIcon icon={faTimes} className="iconWrong" data-testid='wrong-mail'/>}
-            {validMail && mail && <FontAwesomeIcon icon={faCheck} className="iconRight" data-testid='right-mail'/>}
-
-            <label htmlFor='username' className="label">Username: </label>
-            <input
-              type='text'
-              id='username'
-              ref={userNameRef}
-              autoComplete='off'
-              onChange={(e) => setUserName(e.target.value)}
-              value={userName}
-              required
-              className="input"
-              title='4-24 characters.<br />Must begin with a letter.<br />Letters, numbers, underscores, hyphens allowed.'
-            />
-            {!validName && userName && <FontAwesomeIcon icon={faTimes} className="iconWrong" data-testid='wrong-username'/>}
-            {validName && userName && <FontAwesomeIcon icon={faCheck} className="iconRight" data-testid='right-username'/>}
-
-            <label htmlFor='password' className="label">Password: </label>
-            <input
-              type='password'
-              id='password'
-              onChange={(e) => setPass(e.target.value)}
-              value={pass}
-              required
-              className="input"
-              title={`8-24 characters.<br />Must include uppercase and lowercase letters, a number and a special character.<br />Allowed special characters: !#$%`}
-            />
-            {!validPass && pass && <FontAwesomeIcon icon={faTimes} className="iconWrong" data-testid='wrong-password'/>}
-            {validPass && pass && <FontAwesomeIcon icon={faCheck} className="iconRight" data-testid='right-password'/>}
-
-            <label htmlFor='passwordConfirm' className="label">Confirm Password: </label>
-            <input
-              type='password'
-              id='passwordConfirm'
-              onChange={(e) => setMatchPass(e.target.value)}
-              value={matchPass}
-              required
-              className="input"
-              title='Must be the same as the password'
-            />
-            {!validMatch && matchPass && <FontAwesomeIcon icon={faTimes} className="iconWrong" data-testid='wrong-confirm-password'/>}
-            {validMatch && matchPass && <FontAwesomeIcon icon={faCheck} className="iconRight" data-testid='right-confirm-password'/>}
-
+            {inputs.map((input)=>(
+              <>
+                <label htmlFor={input.idInput} className="label">{input.showName}</label>
+                <input
+                  type={input.type}
+                  id={input.idInput}
+                  autoComplete='off'
+                  onChange={input.action}
+                  value={input.value}
+                  required
+                  className="input"
+                  title={input.title}
+                />
+                <IconRightOrWrong 
+                  valid={input.valid} 
+                  text={input.value} 
+                  dataTestIdWrong={input.dataTestIdWrong} 
+                  dataTestIdRight={input.dataTestIdRight}
+                />
+              </>
+            ))}
             <button disabled={!validMail || !validName || !validPass || !validMatch} className="button"> {buttonText} </button>
           </form>
         </div>
