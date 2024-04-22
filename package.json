@@ -59,6 +59,7 @@
     ]
   },
   "devDependencies": {
+    "@tanstack/react-table": "^8.16.0",
     "@types/react-scroll": "^1.8.10",
     "file-loader": "^6.2.0"
   }

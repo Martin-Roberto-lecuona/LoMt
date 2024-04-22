@@ -43,13 +43,12 @@ const Login = () => {
   e.preventDefault()
   const controller = new AbortController();
   try {
-    const response = await fetch(`${APILINK}/search?q=${user.username}&limit=1`, {
-    signal: controller.signal});
+    const response = await fetch(`${APILINK}/search?q=${user.username}&limit=1`, {signal: controller.signal})
     if (!response.ok) throw new Error('User not found');
   
     const validUser = await response.json();  
     if  (!validUser.users.length || validUser.users[0].username !== user.username || validUser.users[0].password !== user.password)
-    throw new Error('User not found');
+      throw new Error('User not found');
 
   setUser({...user, mail: validUser.users[0].email});
   /// Como hacer para que renderice el setUser antes que guardar en el localStorage

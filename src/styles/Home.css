@@ -1,6 +1,23 @@
 .home{
     height: 1000px;
-    background-color: violet;
+}
+
+.clientsTable{
+    table-layout: fixed;
+    /* width: 400px;
+    min-width: fit-content; */
+    border-collapse: collapse;
+    justify-content: center;
+    margin-top: 30px;
+    margin-left: 15%;
+}
+.clientsTableCell{
+    border: 2px solid #112D4E;
+    text-align: left;
+    padding: 8px;
+    background-color: #DBE2EF ;
+    width: fit-content;
+    width: moz-fit-content;
 }
 @media screen and (max-width: 650px){
     .home{
