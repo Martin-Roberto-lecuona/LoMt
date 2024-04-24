@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import '../styles/Home.css';
 import { useUser, UserType } from '../Hooks/UserContext';
-import {createColumnHelper, flexRender, getCoreRowModel, useReactTable} from "@tanstack/react-table"
+import {createColumnHelper, flexRender, getCoreRowModel, SortingState, useReactTable} from "@tanstack/react-table"
 
 import {APILINK} from '../constants'
 
+import Table from '../Componentes/Table';
 
 const columnHelper = createColumnHelper<UserType>()
 
@@ -27,6 +28,7 @@ const Home: React.FC<{}> = () => {
   const { user }: { user: UserType } = useUser()
   const [searchValue, setSearchValue] = useState<string>("")
   const [inputSearch, setInputSearch] = useState<string>("")
+  const [sorting, setSorting] = useState<SortingState>([])
   const [clients, setClients] = useState<Array<UserType>>([
     { username:"finding...", mail:"finding...", password:"finding..."},
   ])
@@ -35,11 +37,13 @@ const Home: React.FC<{}> = () => {
     // Define the asynchronous function
     const fetchUsers = async () => {
       try {
-        const url = 'http://127.0.0.1:8000/users'; // Your API endpoint
-        const response = await fetch(url); // Fetch data from the API
+        const order = sorting[0]?.desc ? 'desc' : 'asc'
+        const sort = sorting[0]?.id ?? 'username'
+        const url = `http://127.0.0.1:8000/users?nameLike=${searchValue}&sort=${sort}&order=${order}`; 
+        const response = await fetch(url);
         if (response.ok) {
-          const users = await response.json(); // Convert the response to JSON
-          setClients(users); // Update the state with the fetched data
+          const users = await response.json(); 
+          setClients(users);
         } else {
           console.error('Failed to fetch users:', response.statusText);
         }
@@ -49,7 +53,7 @@ const Home: React.FC<{}> = () => {
     };
 
     fetchUsers();
-  }, []);
+  }, [searchValue, sorting]);
 
 
   const table = useReactTable({
@@ -57,6 +61,10 @@ const Home: React.FC<{}> = () => {
     columns, 
     debugTable:true,
     getCoreRowModel: getCoreRowModel(),
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
     })
 
   const submitSearch:React.FormEventHandler<HTMLFormElement> = (e) => {
@@ -70,43 +78,12 @@ const Home: React.FC<{}> = () => {
       <div data-testid='USER' >USER: {user.username}</div>
       <div data-testid='PASS' >PASS: {user.password}</div>
       <div data-testid='MAIL' >MAIL: {user.mail}</div>
-
-
-      <form onSubmit={submitSearch}>
-        <input 
-          type="text"
-          placeholder='Search...'
-          value={inputSearch}
-          onChange={(e)=>setSearchValue(e.target.value)} />
-      </form>
-      <table className='clientsTable'>
-        <thead>
-            {table.getHeaderGroups().map(headerGroup=>(
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((h) => (
-                <th key={h.id} className='clientsTableCell'>
-                  <div>
-                    {flexRender(h.column.columnDef.header,
-                      h.getContext()
-                    )}
-                  </div>
-                </th>
-                ))}
-            </tr>
-            ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((r)=>(
-            <tr key={r.id}>
-              {r.getVisibleCells().map((c) => 
-                <td key={c.id} className='clientsTableCell'>
-                  {flexRender(c.column.columnDef.cell,c.getContext())}
-                </td>
-              )}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      
+      <Table 
+        setter={setClients}
+        type={clients}
+        columns={columns}
+      />
       
     </div>
   )
