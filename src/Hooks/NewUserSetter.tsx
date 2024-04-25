@@ -10,9 +10,10 @@ import IconRightOrWrong from '../Componentes/IconRightOrWrong'
 import {USER_REGEX,PASS_REGEX,APILINK,Inputs} from '../constants'
 
 interface  Props{
-  Title: string;
-  buttonText:string;
-  isUpdate?:boolean;
+  Title: string,
+  buttonText:string,
+  isUpdate?:boolean,
+  children?: React.ReactNode,
 }
 interface InputWithCheck extends Inputs{
   valid: boolean,
@@ -20,7 +21,7 @@ interface InputWithCheck extends Inputs{
   dataTestIdRight:string,
 }
 
-const NewUserSetter = ({Title, buttonText,isUpdate}:Props) => {
+const NewUserSetter = ({Title, buttonText,isUpdate,children}:Props) => {
   
   const mailRef = useRef<HTMLInputElement>(null)
   const userNameRef = useRef<HTMLInputElement>(null)
@@ -174,6 +175,7 @@ const NewUserSetter = ({Title, buttonText,isUpdate}:Props) => {
             <button disabled={!validMail || !validName || !validPass || !validMatch} className="button"> {buttonText} </button>
           </form>
         </div>
+        {children}
     </div>
   )
 }
