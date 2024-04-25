@@ -1,7 +1,5 @@
 import React from 'react'
 import { useRef, useState, useEffect } from 'react'
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import '../styles/Register.css'
 import { useUser, UserType } from './UserContext';
 import validator from 'email-validator';
@@ -24,7 +22,6 @@ interface InputWithCheck extends Inputs{
 const NewUserSetter = ({Title, buttonText,isUpdate,children}:Props) => {
   
   const mailRef = useRef<HTMLInputElement>(null)
-  const userNameRef = useRef<HTMLInputElement>(null)
   const errorRef = useRef<HTMLInputElement>(null)
 
   const {user,setUser,setShowLogin, setShowRegister} = useUser()
@@ -48,7 +45,6 @@ const NewUserSetter = ({Title, buttonText,isUpdate,children}:Props) => {
   const [validMatch, setValidMatch] = useState<boolean>(false)
 
   const [errMsg, setErrMsg] = useState<string>('')
-  const [success, setSuccess] = useState<boolean>(false)
 
   useEffect(() => {
     setTimeout(() => {
@@ -119,7 +115,6 @@ const NewUserSetter = ({Title, buttonText,isUpdate,children}:Props) => {
       if (!createUserResponse.ok) throw new Error('Error creating user');
       
       setUser({username:userName, password:pass, mail:mail});
-      setSuccess(true)
       setShowLogin(false)
       setShowRegister(false)
 
@@ -127,7 +122,6 @@ const NewUserSetter = ({Title, buttonText,isUpdate,children}:Props) => {
         if (error instanceof Error){
           console.log(error.message);
           setErrMsg(error.message);
-          setSuccess(false);
         }
       }
   }

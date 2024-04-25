@@ -1,7 +1,6 @@
 import { AccessorKeyColumnDef, flexRender, getCoreRowModel, SortingState, useReactTable } from '@tanstack/react-table'
 import React, { useEffect, useState } from 'react'
 import '../styles/Table.css';
-import { UserType } from '../Hooks/UserContext';
 
 interface Props<T> {
 	setter : React.Dispatch<React.SetStateAction<T[]>>,
@@ -34,7 +33,7 @@ const Table  = <T,>({setter, columns, type }: Props<T>) => {
     };
 
     fetchUsers();
-  }, [searchValue, sorting]);
+  }, [setter, searchValue, sorting]);
 
 	const table = useReactTable({
 		data:type,
