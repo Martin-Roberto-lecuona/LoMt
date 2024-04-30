@@ -12,6 +12,10 @@ import { useState  } from 'react'
 import React from 'react';
 import { useUser } from './Hooks/UserContext';
 
+import {QueryClient,QueryClientProvider} from '@tanstack/react-query'
+
+// Create a client
+const queryClient = new QueryClient()
 
 function App() {
   const [showHome, setShowHome] = useState(true);
@@ -19,7 +23,7 @@ function App() {
   const [showClients, setShowClients] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   
-  const {user,setUser,showLogin,showRegister,setShowLogin} = useUser()
+  const {setUser,showLogin,showRegister,setShowLogin} = useUser()
 
   const generateToggleFunction = (activeState:string) =>(
     activeState=activeState.toLowerCase(),
@@ -39,6 +43,7 @@ function App() {
     localStorage.clear();
   };
   return (
+    <QueryClientProvider client={queryClient}>
       <div className="App">
         {showLogin && <Login/>}
         {showRegister && <Register/>}
@@ -58,6 +63,7 @@ function App() {
           {showSettings && <Settings />}
           </FadeTransition>)}
       </div>
+    </QueryClientProvider>
   );
 }
 

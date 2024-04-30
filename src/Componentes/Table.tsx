@@ -1,42 +1,38 @@
 import { AccessorKeyColumnDef, flexRender, getCoreRowModel, SortingState, useReactTable } from '@tanstack/react-table'
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import '../styles/Table.css';
 
 interface Props<T> {
-	setter : React.Dispatch<React.SetStateAction<T[]>>,
 	columns : AccessorKeyColumnDef<T, string>[],
-	type : T[],
+  fetchLink: string
 }
 
-
-const Table  = <T,>({setter, columns, type }: Props<T>) => {
+const Table  = <T,>({columns,fetchLink}: Props<T>) => {
 	const [searchValue, setSearchValue] = useState<string>("")
   const [inputSearch, setInputSearch] = useState<string>("")
   const [sorting, setSorting] = useState<SortingState>([])
+  const queryClient = useQueryClient()
 
-	useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const order = sorting[0]?.desc ? 'desc' : 'asc'
-        const sort = sorting[0]?.id ?? 'username'
-        const url = `http://127.0.0.1:8000/users?nameLike=${searchValue}&sort=${sort}&order=${order}`; 
-        const response = await fetch(url);
-        if (response.ok) {
-          const data = await response.json(); 
-					setter(data)
-        } else {
-          console.error('Failed to fetch users:', response.statusText);
-        }
-      } catch (error) {
-        console.error('An error occurred while fetching users:', error);
-      }
-    };
-
-    fetchUsers();
-  }, [setter, searchValue, sorting]);
+	const fetchUsers = async () => {
+    const order = sorting[0]?.desc ? 'desc' : 'asc';
+    const sort = sorting[0]?.id ?? 'username';
+    const url = `${fetchLink}?nameLike=${searchValue}&sort=${sort}&order=${order}`;
+    const response = await fetch(url);
+    if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else {
+        throw new Error('Failed to fetch users');
+    }
+  };
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ['users', searchValue, sorting[0]?.desc ? 'desc' : 'asc'],
+    queryFn: fetchUsers,
+  });
 
 	const table = useReactTable({
-		data:type,
+		data: data || [],
 		columns, 
 		debugTable:true,
 		getCoreRowModel: getCoreRowModel(),
@@ -46,12 +42,19 @@ const Table  = <T,>({setter, columns, type }: Props<T>) => {
 		onSortingChange: setSorting,
 		})
 
-	const submitSearch:React.FormEventHandler<HTMLFormElement> = (e) => {
-		e.preventDefault()
-		setSearchValue(inputSearch)
-	}
+	const submitSearch: React.FormEventHandler<HTMLFormElement> = (e) => {
+      e.preventDefault();
+      setSearchValue(inputSearch);
+      refetch();
+  };
+  
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-
+  if (error) {
+    return <div>Error loading users</div>;
+  }
 	return (
 	<div className='containerTabla'>
 		
