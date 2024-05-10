@@ -132,7 +132,7 @@ const Login = () => {
         </p>
         
           <p>
-            Don&apost have an account?            
+            Don't have an account?            
             <span className='line' onClick={handleRegisterClick} > <a>Register </a> </span>
           </p>
 
