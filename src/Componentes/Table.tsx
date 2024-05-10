@@ -12,7 +12,7 @@ const Table  = <T,>({columns,fetchLink}: Props<T>) => {
 	const [searchValue, setSearchValue] = useState<string>("")
   const [inputSearch, setInputSearch] = useState<string>("")
   const [sorting, setSorting] = useState<SortingState>([])
-  const queryClient = useQueryClient()
+  // const queryClient = useQueryClient()
 
 	const fetchUsers = async () => {
     const order = sorting[0]?.desc ? 'desc' : 'asc';

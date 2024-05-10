@@ -1,4 +1,4 @@
-import React, {useState } from 'react'
+import React from 'react'
 import '../styles/Home.css';
 import { useUser, UserType } from '../Hooks/UserContext';
 import {createColumnHelper} from "@tanstack/react-table"
@@ -23,9 +23,6 @@ const columns = [
 
 const Home: React.FC<{}> = () => { 
   const { user }: { user: UserType } = useUser()
-  const [clients, setClients] = useState<Array<UserType>>([
-    { username:"finding...", mail:"finding...", password:"finding..."},
-  ])
 
   return (
     <div className='home' data-testid='home'>
