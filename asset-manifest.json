@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/LoMt/static/css/main.c9e68dd8.css",
-    "main.js": "/LoMt/static/js/main.9da7470b.js",
+    "main.js": "/LoMt/static/js/main.0d432124.js",
     "static/js/453.6a33665d.chunk.js": "/LoMt/static/js/453.6a33665d.chunk.js",
     "static/media/LoMT-logo.png": "/LoMt/static/media/LoMT-logo.b664756292244691a185.png",
     "index.html": "/LoMt/index.html",
     "main.c9e68dd8.css.map": "/LoMt/static/css/main.c9e68dd8.css.map",
-    "main.9da7470b.js.map": "/LoMt/static/js/main.9da7470b.js.map",
+    "main.0d432124.js.map": "/LoMt/static/js/main.0d432124.js.map",
     "453.6a33665d.chunk.js.map": "/LoMt/static/js/453.6a33665d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c9e68dd8.css",
-    "static/js/main.9da7470b.js"
+    "static/js/main.0d432124.js"
   ]
 }
