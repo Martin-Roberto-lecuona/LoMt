@@ -9,8 +9,14 @@
     background-color: #F9F7F7;
     flex-direction: column;
     padding-top: 10px;
-    border-width: 20px;
     transition: width 0.2s ease-out;
+    border-radius: 1px;
+    border-color: #112D4E ;
+    border-width: 1px;
+    border-style: solid;
+    border-left: none;
+    border-top: none;
+    border-bottom: none;
 }
 
 .LinkContainer {
@@ -60,7 +66,6 @@
     background-color: #F9F7F7;
     flex-direction: column;
     padding-top: 10px;
-    border-width: 20px;
     transition: width 0.3s ease-out;
 }
 .navBar:hover .navBarLinkText {
