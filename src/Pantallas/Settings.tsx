@@ -6,6 +6,7 @@ import { IoSpeedometer } from "react-icons/io5";
 import { PiGraphFill } from "react-icons/pi";
 import { Link } from 'react-scroll';
 import '../styles/Settings.css';
+import Zones from './Zones';
 
 interface ConfOptions {
   id: number,
@@ -15,6 +16,12 @@ interface ConfOptions {
 }
 
 function Settings() {
+  const [showZones, setShowZones] = useState(true);
+  const [showODBs, setShowODBs] = useState(false);
+  const [showONUType, setShowONUType] = useState(false);
+  const [showSpeedProfiler, setShowSpeedProfiler] = useState(false);
+  const [showOLTs, setShowOLTs] = useState(false);
+
   const [hoveredName, setHoveredName] = useState<string | null>(null);
   const options: ConfOptions[] = [
     { id: 1, link: "Zones", logo: <FaMap size={24} />, action: () => {} },
@@ -46,6 +53,7 @@ function Settings() {
           {hoveredName && <p>{hoveredName}</p>}
         </div>
       </div>
+        {showZones && <Zones />}  
     </div>
   )
 }

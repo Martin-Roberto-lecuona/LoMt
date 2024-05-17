@@ -1,0 +1,12 @@
+.SettingsOptionWrapper{
+    display: flex;
+    height: 80vh;
+    width: 85vw;
+    background-color:brown ;
+    margin-left: 10vw;
+}
+@media screen and (max-width: 650px){
+    .SettingsOptionWrapper{
+        margin-top: 7vh;
+    }
+}

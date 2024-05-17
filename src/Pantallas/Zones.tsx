@@ -2,7 +2,8 @@ import React from 'react';
 import Table from '../Componentes/Table';
 
 import {createColumnHelper} from "@tanstack/react-table"
-// import { UserType } from '../Hooks/UserContext';
+import '../styles/SettingsOption.css'
+
 interface ZoneType {
     country: string, 
     province: string, 
@@ -37,7 +38,8 @@ const columns = [
 
 const Zones: React.FC<{}> = () => {
     return (
-        <div>
+        <div className='SettingsOptionWrapper'>
+            ZONAS
             <Table columns={columns} fetchLink={''} />
         </div>
     );
