@@ -1,11 +1,10 @@
 .OptionsContainer{
     display: flex;
     flex-direction: row;
-    align-items: left;
+    align-items: right;
     justify-content: center;
     height: 100vh;
-    /* padding-left: 250px; */
-    background-color: #f5f5f5;
+    background-color: #DBE2EF;
     list-style-type: none;
 
 }
@@ -18,7 +17,7 @@
     width: 100%;
     cursor: pointer;
     color: #112D4E;
-    margin: 20px;
+    margin: 1vw;
 }
 .OptionsText{
     font-size: 1.3em;
@@ -26,4 +25,34 @@
     padding-top: 10px;
     padding-left: 5px;
     justify-content: space-between;
+}
+.hoveredName {
+    display: none;
+    position: absolute;
+    background-color: #F9F7F7;
+    border: 1px solid #112D4E;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 5vh ;
+}
+@media screen and (max-width: 800px){
+    .OptionsText{
+        display: none;
+    }
+    .hoveredName {
+        display: block;
+    }
+}
+@media screen and (max-width: 650px) {
+    .Options{
+        margin: 20px;
+        margin-top: 90px;
+    }
+    .OptionsText{
+        display: none;
+    }
+    .hoveredName {
+        display: block;
+        margin-top: 18vh ;
+    }
 }

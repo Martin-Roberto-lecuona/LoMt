@@ -47,7 +47,7 @@ const Login = () => {
       if (!response.ok) 
         throw new Error('User not found')
     
-      const validUser = await response.json()  
+      const validUser:UserType[] = await response.json()  
       console.log("validUser: ",validUser[0].mail)
       console.log("user: ",user.password)
       if(validUser[0].username !== user.username || validUser[0].password !== user.password)  

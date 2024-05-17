@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaMap } from "react-icons/fa";
 import { MdCallSplit } from "react-icons/md";
 import { SiMonkeytype } from "react-icons/si";
@@ -15,6 +15,7 @@ interface ConfOptions {
 }
 
 function Settings() {
+  const [hoveredName, setHoveredName] = useState<string | null>(null);
   const options: ConfOptions[] = [
     { id: 1, link: "Zones", logo: <FaMap size={24} />, action: () => {} },
     { id: 2, link: "ODBs", logo: <MdCallSplit size={24} />, action: () => {} },
@@ -32,11 +33,18 @@ function Settings() {
               to={link}
               smooth
               duration={100}
-              className={'Options'}>
+              className={'Options'} 
+              name={link}
+              onMouseEnter={() => setHoveredName(link)}
+              onMouseLeave={() => setHoveredName(null)}
+            >
               {logo} <span className={'OptionsText'}>{link}</span>
             </Link>
           </li>
         ))}
+        <div className= {hoveredName ? "hoveredName": ""}>
+          {hoveredName && <p>{hoveredName}</p>}
+        </div>
       </div>
     </div>
   )
