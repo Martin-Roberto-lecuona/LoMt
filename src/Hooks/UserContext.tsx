@@ -35,9 +35,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     password: '',
     mail: '',
   });
-  const [showLogin, setShowLogin] = useState<boolean>(true);
+  // const [showLogin, setShowLogin] = useState<boolean>(true);
+  const [showLogin, setShowLogin] = useState<boolean>(false);
   const [showRegister, setShowRegister] = useState<boolean>(false);
-
+  
   const contextValue: UserContextData = {
     user,
     setUser,
