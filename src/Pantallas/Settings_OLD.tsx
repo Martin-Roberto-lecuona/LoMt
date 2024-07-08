@@ -32,7 +32,28 @@ function Settings() {
   ];
   return (
     <div>
-        
+       <div className={'OptionsContainer'}>
+        {options.map(({ id, link, logo, action }) => (
+          <li key={id}>
+            <Link
+              onClick={action}
+              to={link}
+              smooth
+              duration={100}
+              className={'Options'} 
+              name={link}
+              onMouseEnter={() => setHoveredName(link)}
+              onMouseLeave={() => setHoveredName(null)}
+            >
+              {logo} <span className={'OptionsText'}>{link}</span>
+            </Link>
+          </li>
+        ))}
+        <div className= {hoveredName ? "hoveredName": ""}>
+          {hoveredName && <p>{hoveredName}</p>}
+        </div>
+      </div>
+        {showZones && <Zones />}  
     </div>
   )
 }
