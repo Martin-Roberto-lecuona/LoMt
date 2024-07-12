@@ -2,9 +2,9 @@ import { AccessorKeyColumnDef, flexRender, getCoreRowModel, SortingState, useRea
 import React, {useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import '../styles/Table.css';
-
+import { FiRefreshCcw } from "react-icons/fi";
 interface Props<T> {
-	columns : AccessorKeyColumnDef<T, string>[],
+	columns : AccessorKeyColumnDef<T, any>[],
   fetchLink: string
 }
 
@@ -14,21 +14,26 @@ const Table  = <T,>({columns,fetchLink}: Props<T>) => {
   const [sorting, setSorting] = useState<SortingState>([])
   // const queryClient = useQueryClient()
 
-	const fetchUsers = async () => {
+	const fetchData = async () => {
     const order = sorting[0]?.desc ? 'desc' : 'asc';
-    const sort = sorting[0]?.id ?? 'username';
-    const url = `${fetchLink}?nameLike=${searchValue}&sort=${sort}&order=${order}`;
+    const sort = sorting[0]?.id ?? 'id';
+    var url = `${fetchLink}?nameLike=${searchValue}&sort=${sort}&order=${order}`;
+    if (searchValue === "" && inputSearch === "" && sorting[0]?.id === undefined) {
+      url = `${fetchLink}`;
+    }
     const response = await fetch(url);
     if (response.ok) {
         const data = await response.json();
+        console.log("data")
+        console.log(data)
         return data;
     } else {
-        throw new Error('Failed to fetch users');
+        throw new Error('Failed to fetch table');
     }
   };
   const { data, error, isLoading, refetch } = useQuery({
-    queryKey: ['users', searchValue, sorting[0]?.desc ? 'desc' : 'asc'],
-    queryFn: fetchUsers,
+    queryKey: ['table', searchValue, sorting[0]?.desc ? 'desc' : 'asc'],
+    queryFn: fetchData,
   });
 
 	const table = useReactTable({
@@ -53,18 +58,21 @@ const Table  = <T,>({columns,fetchLink}: Props<T>) => {
   }
 
   if (error) {
-    return <div>Error loading users</div>;
+    return <div>Error loading table</div>;
   }
 	return (
 	<div className='containerTabla'>
 		
 		<form onSubmit={submitSearch}>
+      <div className="controls">
         <input 
 					className='searchBar'
           type="text"
           placeholder='Search...'
           value={inputSearch}
           onChange={(e)=>setInputSearch(e.target.value)} />
+          <button className='buttonRefetch' onClick={() => {refetch();}}> <FiRefreshCcw /> </button>
+        </div>
       </form>
       <table className='table'>
         <thead>

@@ -22,9 +22,8 @@ function Settings() {
   const [showSpeedProfiler, setShowSpeedProfiler] = useState(false);
   const [showOLTs, setShowOLTs] = useState(false);
 
-  const [hoveredName, setHoveredName] = useState<string | null>(null);
   const options: ConfOptions[] = [
-    { id: 1, link: "Zones", logo: <FaMap size={24} />, action: () => {} },
+    { id: 1, link: "Zones", logo: <FaMap size={24} />, action: () => {setShowZones(!showZones)} },
     { id: 2, link: "ODBs", logo: <MdCallSplit size={24} />, action: () => {} },
     { id: 3, link: "ONUType", logo: <SiMonkeytype  size={24} />, action: () => {}  },
     { id: 4, link: "SpeedProfiler", logo: <IoSpeedometer size={24} />, action: () => {}  },
@@ -32,7 +31,23 @@ function Settings() {
   ];
   return (
     <div>
-        
+       <div className={'OptionsContainer'}>
+        {options.map(({ id, link, logo, action }) => (
+          <li key={id}>
+            <Link
+              onClick={action}
+              to={link}
+              smooth
+              duration={100}
+              className={'Options'} 
+              name={link}
+            >
+              {logo} <span className={'OptionsText'}>{link}</span>
+            </Link>
+          </li>
+        ))}
+      </div>
+      {showZones && <Zones />} 
     </div>
   )
 }

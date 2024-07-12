@@ -1,13 +1,20 @@
-.containerTabla{
+.containerTabla {
     font-size: 15px;
 }
-.home{
+
+.home {
     height: 1000px;
 }
-.searchBar{
-    margin-bottom: 1px ;
+
+.controls {
+    display: flex;
+    align-items: center;
     margin-top: 10px;
     margin-left: 15%;
+}
+
+.searchBar {
+    margin-right: 10px;
     justify-content: center;
     display: flex;
     border-color: #112D4E;
@@ -15,27 +22,38 @@
     width: 130px;
     height: 30px;
 }
-.table{
+
+.buttonRefetch {
+    justify-content: center;
+    display: flex;
+    border-color: #112D4E;
+    background-color: #DBE2EF;
+    height: 30px;
+    align-items: center;
+}
+
+.table {
     table-layout: fixed;
     border-collapse: collapse;
     justify-content: center;
     margin-top: 30px;
     margin-left: 15%;
 }
-.tableHeader{
+
+.tableHeader {
     border: 2px solid #112D4E;
     text-align: left;
     padding: 8px;
-    background-color: #3F72AF ;
+    background-color: #3F72AF;
     color: #DBE2EF;
     width: fit-content;
     cursor: pointer;
-
 }
-.tableCell{
+
+.tableCell {
     border: 2px solid #112D4E;
     text-align: left;
     padding: 8px;
-    background-color: #DBE2EF ;
+    background-color: #DBE2EF;
     width: 120px;
 }
