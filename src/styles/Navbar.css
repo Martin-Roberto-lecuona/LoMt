@@ -82,13 +82,16 @@
         padding-left: 20px;
         justify-content: space-evenly;
     }
+    .navBar{
+        padding-bottom: 0px;
+    }
 
     .navBar:hover, .navBar{
         display: flex;
         align-items: start;
         position: '-webkit-sticky';
         flex-direction: row;
-        height: 10%;
+        height: 8%;
         width: 100%;
         min-height: 65px;
         background-color: #F9F7F7;

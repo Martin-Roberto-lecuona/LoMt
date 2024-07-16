@@ -4,6 +4,7 @@ import Formulario from './Formulario';
 import { createColumnHelper } from '@tanstack/react-table';
 import '../styles/SettingsOption.css';
 import '../styles/Zones.css';
+import type { FormType } from './Formulario';
 
 const apiZonas = 'http://127.0.0.1:8000/zonas';
 
@@ -14,7 +15,12 @@ interface ZoneType {
 }
 
 const columnHelper = createColumnHelper<ZoneType>();
+const addFormCtes: FormType[] = [
+  { title: 'id' },
+  { title: 'nombre' },
+  { title: 'estado' },
 
+];
 const handleDelete = async (id: number) => {
   const response = await fetch(`${apiZonas}/${id}`, {
     method: 'DELETE',
@@ -63,15 +69,15 @@ const Zones: React.FC<{}> = () => {
 
   return (
     <div>
-      {!showForm && 
+      {!showForm &&
           <div className='SettingsOptionWrapper'>
-            <Table columns={columns} fetchLink={apiZonas} />
-            <button className='bottonAdd' onClick={handleAdd}>
+            <Table columns={columns} fetchLink={apiZonas} handleAdd={handleAdd} />
+            {/* <button className='bottonAdd' onClick={handleAdd}>
               Add
-            </button>
+            </button> */}
           </div>
       }
-      {showForm && <Formulario onClose={handleCloseForm} onAdd={handleFormSubmit} api={apiZonas} inputs = {['id', 'nombre', 'estado']}/>}
+      {showForm && <Formulario onClose={handleCloseForm} onAdd={handleFormSubmit} api={apiZonas} inputs = {addFormCtes}/>}
     </div>
   );
 }

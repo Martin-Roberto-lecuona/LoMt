@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
-import '../styles/Formulario.css'
+import '../styles/Formulario.css';
+
+export interface FormType {
+  title: string;
+  type?: 'checkbox' | 'text' | 'number' | 'select' | 'file' | 'radio' | 'range' | 'email' | 'url' | 'tel';
+  options?: string[];
+}
+
 interface FormularioProps {
   onClose: () => void;
   onAdd: () => void;
   api: string;
-  inputs: string[];
+  inputs: FormType[];
 }
 
 const Formulario: React.FC<FormularioProps> = ({ onClose, onAdd, api, inputs }) => {
@@ -32,22 +39,45 @@ const Formulario: React.FC<FormularioProps> = ({ onClose, onAdd, api, inputs }) 
   return (
     <div className="formularioContainer">
       <form onSubmit={handleSubmit}>
-        {inputs.map((inputName) => (
-          <div key={inputName}>
-            <label className="label" >{inputName}:</label>
-            <input
-              className='input'
-              type="text"
-              name={inputName}
-              value={formValues[inputName] || ''}
-              onChange={(e) =>
-                setFormValues((prevValues) => ({
-                  ...prevValues,
-                  [inputName]: e.target.value,
-                }))
-              }
-              required
-            />
+        {inputs.map((input) => (
+          <div key={input.title}>
+            {input.type === 'checkbox' && input.options ? (
+              input.options.map((option) => (
+                <label key={option} className="inputCheckWrapper">  
+                  {/* hacer que se vean en paralelo y no una abajo de la otra */}
+                  <input
+                    className="inputCheck"
+                    type="checkbox"
+                    name={option}
+                    checked={formValues[input.title] === option}
+                    onChange={(e) =>
+                      setFormValues((prevValues) => ({
+                        ...prevValues,
+                        [input.title]: e.target.checked ? option : '',
+                      }))
+                    }
+                  />
+                  {option}
+                </label>
+              ))
+            ) : (
+              <div>
+                <label className="label">{input.title}:</label>
+                <input
+                  className="input"
+                  type={input.type || 'text'}
+                  name={input.title}
+                  value={formValues[input.title] || ''}
+                  onChange={(e) =>
+                    setFormValues((prevValues) => ({
+                      ...prevValues,
+                      [input.title]: e.target.value,
+                    }))
+                  }
+                  required
+                />
+              </div>
+            )}
           </div>
         ))}
         <button type="submit">Add</button>
@@ -55,6 +85,6 @@ const Formulario: React.FC<FormularioProps> = ({ onClose, onAdd, api, inputs }) 
       </form>
     </div>
   );
-}
+};
 
 export default Formulario;

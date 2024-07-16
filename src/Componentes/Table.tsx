@@ -6,9 +6,10 @@ import { FiRefreshCcw } from "react-icons/fi";
 interface Props<T> {
 	columns : AccessorKeyColumnDef<T, any>[],
   fetchLink: string
+  handleAdd? : () => void
 }
 
-const Table  = <T,>({columns,fetchLink}: Props<T>) => {
+const Table  = <T,>({columns,fetchLink,handleAdd}: Props<T>) => {
 	const [searchValue, setSearchValue] = useState<string>("")
   const [inputSearch, setInputSearch] = useState<string>("")
   const [sorting, setSorting] = useState<SortingState>([])
@@ -54,11 +55,11 @@ const Table  = <T,>({columns,fetchLink}: Props<T>) => {
   };
   
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className='containerTabla'>Loading...</div>;
   }
 
   if (error) {
-    return <div>Error loading table</div>;
+    return <div className='containerTabla'> Error loading table</div>;
   }
 	return (
 	<div className='containerTabla'>
@@ -72,6 +73,7 @@ const Table  = <T,>({columns,fetchLink}: Props<T>) => {
           value={inputSearch}
           onChange={(e)=>setInputSearch(e.target.value)} />
           <button className='buttonRefetch' onClick={() => {refetch();}}> <FiRefreshCcw /> </button>
+          {handleAdd &&  <button className='bottonAdd' onClick={handleAdd}> Add </button>}
         </div>
       </form>
       <table className='table'>

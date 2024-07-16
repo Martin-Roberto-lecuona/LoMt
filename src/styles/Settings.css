@@ -45,9 +45,10 @@
     }
 }
 @media screen and (max-width: 650px) {
+
     .Options{
         margin: 20px;
-        margin-top: 11vh;
+        margin-top: 18vh;
     }
     .OptionsText{
         display: none;
