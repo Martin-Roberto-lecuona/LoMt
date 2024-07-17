@@ -48,20 +48,21 @@ function App() {
         {showLogin && <Login/>}
         {showRegister && <Register/>}
           {!showLogin && !showRegister  && (
-          <FadeTransition>
-          <Navbar 
-            toggleHomeScreen=     {() =>  {generateToggleFunction('home')}} 
-            toggleProfileScreen=  {() =>  {generateToggleFunction('profile')}}
-            toggleClientsScreen=  {() =>  {generateToggleFunction('clients')}}
-            toggleSettingsScreen= {() =>  {generateToggleFunction('settings')}}
-            handleLogout=         {handleLogout}
-          />
-  
-          {showHome && <Home />}
-          {showProfile && <Profile/>}
-          {showClients && <Clients />}
-          {showSettings && <Settings />}
-          </FadeTransition>)}
+          <div className='screens'>
+            <FadeTransition>
+            <Navbar 
+              toggleHomeScreen=     {() =>  {generateToggleFunction('home')}} 
+              toggleProfileScreen=  {() =>  {generateToggleFunction('profile')}}
+              toggleClientsScreen=  {() =>  {generateToggleFunction('clients')}}
+              toggleSettingsScreen= {() =>  {generateToggleFunction('settings')}}
+              handleLogout=         {handleLogout}
+            />
+            {showHome && <Home />}
+            {showProfile && <Profile/>}
+            {showClients && <Clients />}
+            {showSettings && <Settings />}
+            </FadeTransition>
+          </div>)}
       </div>
     </QueryClientProvider>
   );

@@ -1,0 +1,61 @@
+.statusButton {
+    padding: 20px;
+    margin-top: 20px;
+    margin-left: 10px;
+    border-radius: 5px;
+    color: #fff;
+    width: 250px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.statusButton-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.statusButton-icon {
+    font-size: 30px;
+}
+
+.statusButton-count {
+    font-size: 24px;
+}
+
+.statusButton-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@media screen and (max-width: 650px){
+    .statusButton {
+        padding: 20px;
+        margin-top: 20px;
+        margin-left: 0px;
+        border-radius: 5px;
+        color: #fff;
+        width: 250px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .statusButton-title {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    
+    .statusButton-icon {
+        font-size: 30px;
+    }
+    
+    .statusButton-count {
+        font-size: 24px;
+    }
+    
+}

@@ -1,8 +1,39 @@
 .home{
     height: 1000px;
 }
+.dashBoard{
+    display: flex;
+    margin-left: 100px;
+    justify-content: center;
+    align-items: center;
+}
+.chart{
+    display: flex;
+    margin-left: 100px;
+    margin-top: 100px;
+    justify-content: center;
+    align-items: center;
+}
 @media screen and (max-width: 650px){
     .home{
         padding-top: 90px;
+        width: 70%;
+    }
+    .dashBoard{
+        display: flex;
+        flex-direction: column;
+        margin-left: 40%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .chart{
+        display: flex;
+        margin-left: 1px;
+        margin-top: 10px;
+        justify-content: center;
+        align-items: center;
+        width: 400px;
+        height: min-content;
     }
 }

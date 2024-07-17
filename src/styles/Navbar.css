@@ -92,7 +92,7 @@
         position: '-webkit-sticky';
         flex-direction: row;
         height: 8%;
-        width: 100%;
+        width: 70%;
         min-height: 65px;
         background-color: #F9F7F7;
         transition: width 0.3s ease-out;
