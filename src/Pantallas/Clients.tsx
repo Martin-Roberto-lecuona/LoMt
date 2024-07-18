@@ -81,7 +81,7 @@ const columns = [
   }),
   columnHelper.accessor('auth_date', {
     header: () => 'Auth Date',
-    cell: (info) => info.getValue().toLocaleDateString(),
+    cell: (info) => info.getValue(),
   }),
   columnHelper.accessor('sn_mac', {
     header: () => 'View',
