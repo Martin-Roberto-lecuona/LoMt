@@ -7,6 +7,7 @@ interface Point {
   x: number;
   y: string;
 }
+const refetch_time = 5000;
 
 const RealTimeChart: React.FC = () => {
   const [data, setData] = useState<Point[]>([]);
@@ -29,7 +30,8 @@ const RealTimeChart: React.FC = () => {
       }
     };
 
-    const intervalId = setInterval(fetchData, 1000); 
+    
+    const intervalId = setInterval(fetchData, refetch_time); 
 
     return () => clearInterval(intervalId); 
   }, []);

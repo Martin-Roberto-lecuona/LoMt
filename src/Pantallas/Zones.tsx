@@ -42,7 +42,7 @@ const columns = [
     header: () => 'Nombre',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('estado', {
+  columnHelper.accessor('id', {
     header: () => 'Accion',
     cell: (info) => (
       <button onClick={() => handleDelete(info.row.original.id)}>
