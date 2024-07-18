@@ -1,68 +1,48 @@
-
 import './styles/App.css';
 import Home from './Pantallas/Home';
 import Navbar from './Componentes/Navbar';
 import Clients from './Pantallas/Clients';
 import Settings from './Pantallas/Settings';
-import Register from './Pantallas/Register'
-import Login from './Pantallas/Login'
-import Profile from './Pantallas/Profile'
-import FadeTransition from './Componentes/FadeTransition'
-import { useState  } from 'react'
+import Register from './Pantallas/Register';
+import Login from './Pantallas/Login';
+import Profile from './Pantallas/Profile';
+import FadeTransition from './Componentes/FadeTransition';
 import React from 'react';
 import { useUser } from './Hooks/UserContext';
-
-import {QueryClient,QueryClientProvider} from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
 // Create a client
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 function App() {
-  const [showHome, setShowHome] = useState(true);
-  const [showProfile, setShowProfile] = useState(false);
-  const [showClients, setShowClients] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
-  
-  const {setUser,showLogin,showRegister,setShowLogin} = useUser()
+  const { setUser, showLogin, showRegister, setShowLogin } = useUser();
 
-  const generateToggleFunction = (activeState:string) =>(
-    activeState=activeState.toLowerCase(),
-    setShowHome(activeState === 'home'),  
-    setShowProfile(activeState === 'profile'),
-    setShowClients(activeState === 'clients') ,
-    setShowSettings(activeState === 'settings')
-  );
-  
   const handleLogout = () => {
-    setUser({ username: '', password: '', mail: ''});
-    setShowLogin(true)
-    setShowHome(true)
-    setShowProfile(false)
-    setShowClients(false)
-    setShowSettings(false)
+    setUser({ username: '', password: '', mail: '' });
+    setShowLogin(true);
     localStorage.clear();
   };
+
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">
-        {showLogin && <Login/>}
-        {showRegister && <Register/>}
-          {!showLogin && !showRegister  && (
-          <div className='screens'>
+        {showLogin && <Login />}
+        {showRegister && <Register />}
+        {!showLogin && !showRegister && (
+          <Router>
+            <Navbar handleLogout={handleLogout} />
             <FadeTransition>
-            <Navbar 
-              toggleHomeScreen=     {() =>  {generateToggleFunction('home')}} 
-              toggleProfileScreen=  {() =>  {generateToggleFunction('profile')}}
-              toggleClientsScreen=  {() =>  {generateToggleFunction('clients')}}
-              toggleSettingsScreen= {() =>  {generateToggleFunction('settings')}}
-              handleLogout=         {handleLogout}
-            />
-            {showHome && <Home />}
-            {showProfile && <Profile/>}
-            {showClients && <Clients />}
-            {showSettings && <Settings />}
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/clients" element={<Clients />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="*" element={<Navigate to="/" />} />
+              </Routes>
             </FadeTransition>
-          </div>)}
+          </Router>
+        )}
       </div>
     </QueryClientProvider>
   );

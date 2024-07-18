@@ -1,49 +1,39 @@
-import React from 'react'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Table from '../Componentes/Table';
 import { createColumnHelper } from '@tanstack/react-table';
 
-enum Status{
+const apiClients = 'http://127.0.0.1:8000/clients';
+
+enum Status {
   online = 1,
   powerfail,
   loss_of_signal,
   offline,
   admin_disabled
 }
+
 interface ClientType {
   status: Status,
-  name : string,
-  sn_mac: number
-  onu: string
-  zone: string
-  odb: string
+  name: string,
+  sn_mac: number,
+  onu: string,
+  zone: string,
+  odb: string,
   signal: number,
-  b_r : 'R:DHCP'|'B:???',
+  b_r: 'R:DHCP' | 'B:???',
   vlan: number,
   voip: string,
   tv: string,
   type: string,
   auth_date: Date,
-
 }
-
-const openView = (id: number) => {
-  console.log(id)
-}
-
 
 const columnHelper = createColumnHelper<ClientType>();
 const columns = [
   columnHelper.accessor('status', {
-    header: () => 'ID',
+    header: () => 'Status',
     cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor('sn_mac', {
-    header: () => 'View',
-    cell: (info) => (
-      <button onClick={() => openView(info.row.original.sn_mac)}>
-        View
-      </button>
-    ),
   }),
   columnHelper.accessor('name', {
     header: () => 'Name',
@@ -93,14 +83,34 @@ const columns = [
     header: () => 'Auth Date',
     cell: (info) => info.getValue().toLocaleDateString(),
   }),
+  columnHelper.accessor('sn_mac', {
+    header: () => 'View',
+    cell: (info) => <ViewButton sn_mac={info.row.original.sn_mac} />,
+  }),
 ];
 
+const ViewButton: React.FC<{ sn_mac: number }> = ({ sn_mac }) => {
+  const navigate = useNavigate();
 
+  const handleViewClick = () => {
+    navigate(`/detail/${sn_mac}`);
+  }
 
-const Clients = () => {
   return (
-    <div>Clients</div>
-  )
+    <button onClick={handleViewClick}>
+      View
+    </button>
+  );
 }
 
-export default Clients
+const Clients: React.FC = () => {
+
+  return (
+    <div>
+      <h1>Clients</h1>
+      <Table columns={columns} fetchLink={apiClients} />
+    </div>
+  );
+}
+
+export default Clients;
