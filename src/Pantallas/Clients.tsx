@@ -102,13 +102,16 @@ const ViewButton: React.FC<{ sn_mac: number }> = ({ sn_mac }) => {
     </button>
   );
 }
+interface ClientProps {
+  filter?: string;
+}
 
-const Clients: React.FC = () => {
-
+const Clients: React.FC<ClientProps> = ({filter}) => {
+  const apiClientsFilter = filter? apiClients + '/status/' + filter : apiClients
   return (
     <div>
       <h1>Clients</h1>
-      <Table columns={columns} fetchLink={apiClients} />
+      <Table columns={columns} fetchLink={apiClientsFilter} />
     </div>
   );
 }

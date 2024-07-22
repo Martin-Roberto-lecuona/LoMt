@@ -37,6 +37,8 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/clients" element={<Clients />} />
+                <Route path="/clients/online" element={<Clients filter='active'/>} />
+                <Route path="/clients/offline" element={<Clients filter='inactive'/>} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
