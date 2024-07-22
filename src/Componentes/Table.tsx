@@ -3,6 +3,8 @@ import React, {useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import '../styles/Table.css';
 import { FiRefreshCcw } from "react-icons/fi";
+import { SiMicrosoftexcel } from "react-icons/si";
+import * as XLSX from 'xlsx'
 interface Props<T> {
 	columns : AccessorKeyColumnDef<T, any>[],
   fetchLink: string
@@ -61,6 +63,12 @@ const Table  = <T,>({columns,fetchLink,handleAdd}: Props<T>) => {
   if (error) {
     return <div className='containerTabla'> Error loading table</div>;
   }
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(data || []);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "TableData");
+    XLSX.writeFile(workbook, "TableExport.xlsx");
+  };
 	return (
 	<div className='containerTabla'>
 		
@@ -74,6 +82,7 @@ const Table  = <T,>({columns,fetchLink,handleAdd}: Props<T>) => {
           onChange={(e)=>setInputSearch(e.target.value)} />
           <button className='buttonRefetch' onClick={() => {refetch();}}> <FiRefreshCcw /> </button>
           {handleAdd &&  <button className='bottonAdd' onClick={handleAdd}> Add </button>}
+          <button className='buttonExport' onClick={() => exportToExcel()}><SiMicrosoftexcel size={20} /></button>
         </div>
       </form>
       <table className='table'>

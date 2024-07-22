@@ -30,8 +30,17 @@
     background-color: #DBE2EF;
     height: 30px;
     align-items: center;
+    margin-left: 10px;
 }
-
+.buttonExport {
+    justify-content: center;
+    display: flex;
+    border-color: green;
+    background-color: rgb(163, 236, 163);
+    height: 30px;
+    align-items: center;
+    margin-left: 10px;
+}
 .table {
     table-layout: fixed;
     border-collapse: collapse;

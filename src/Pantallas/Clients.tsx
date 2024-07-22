@@ -110,7 +110,6 @@ const Clients: React.FC<ClientProps> = ({filter}) => {
   const apiClientsFilter = filter? apiClients + '/status/' + filter : apiClients
   return (
     <div>
-      <h1>Clients</h1>
       <Table columns={columns} fetchLink={apiClientsFilter} />
     </div>
   );
