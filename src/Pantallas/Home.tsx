@@ -5,6 +5,7 @@ import {USERSLINK} from '../constants'
 import StatusButton from '../Componentes/StatusButton';
 import RealTimeChart from '../Componentes/RealTimeChart';
 import Clients from './Clients';
+import Map from '../Componentes/Map'
 
 const Home: React.FC<{}> = () => { 
   const { user }: { user: UserType } = useUser()
@@ -53,6 +54,10 @@ const Home: React.FC<{}> = () => {
       <div className='chart'>
         <RealTimeChart />
       </div>
+      <div className='maps'>
+        <Map />
+      </div>
+
 
 
 

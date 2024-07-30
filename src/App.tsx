@@ -45,6 +45,7 @@ function App() {
             </FadeTransition>
           </Router>
         )}
+        {/* footer */}
       </div>
     </QueryClientProvider>
   );

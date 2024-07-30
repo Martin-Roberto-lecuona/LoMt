@@ -14,6 +14,7 @@ const RealTimeChart: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      // recibe lista
       try {
         const response = await fetch(apiCoor);
         const newData = await response.json();
