@@ -22,7 +22,7 @@ interface OnuType {
 
 const addFormCtes: FormType[] = [
     { title: 'id' },
-    { title: 'pon type', type: 'checkbox', options: ['opcion1', 'opcion2'] },
+    { title: 'pon type', type: 'checkbox', options: ['GPON', 'EPON'] },
     { title: 'onu type' },
     { title: 'ethernet ports' },
     { title: 'wifi' },

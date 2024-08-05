@@ -17,8 +17,14 @@ interface FormularioProps {
 const Formulario: React.FC<FormularioProps> = ({ onClose, onAdd, api, inputs }) => {
   const [formValues, setFormValues] = useState<{ [key: string]: string }>({});
 
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
+    console.log(formValues) 
+    const formattedValues = { ...formValues };
+    if (formValues['pon type']) {
+      formattedValues['pon_type'] = formValues['pon type'];
+    }
     const response = await fetch(api, {
       method: 'POST',
       headers: {

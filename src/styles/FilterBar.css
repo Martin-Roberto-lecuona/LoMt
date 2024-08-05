@@ -1,0 +1,50 @@
+.filter-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+    /* padding-top: 40%; */ 
+}
+.filter-bar button {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px;
+    margin-top: 5px;
+    margin-left: 5px;
+    border: none;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    color: #F9F7F7;
+    background-color: #3F72AF;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    opacity: 0.5;
+}
+
+.filter-bar button:hover {
+    background-color: #112D4E;
+}
+.filter-bar .button-active{
+    opacity: 1;
+}
+.filter-bar button:disabled {
+    background-color: #DBE2EF;
+    cursor: not-allowed;
+}
+.dropdown-wrapper{
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    /* padding: 10px; */
+    margin-left: 10px;
+
+}
+
+@media screen and (max-width: 650px) {
+    .filter-bar {
+        padding-top: 40%; 
+    }
+}

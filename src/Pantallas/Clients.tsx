@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Table from '../Componentes/Table';
 import { createColumnHelper } from '@tanstack/react-table';
+import FilterBar from '../Componentes/FilterBar';
 
 const apiClients = 'http://127.0.0.1:8000/clients';
 
@@ -83,7 +84,8 @@ const columns = [
     header: () => 'Auth Date',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('sn_mac', {
+  // hay un warning de name duplicado, no importa que accesor ponga. No se bien como solucionarlo
+  columnHelper.accessor('name', {
     header: () => 'View',
     cell: (info) => <ViewButton sn_mac={info.row.original.sn_mac} />,
   }),
@@ -102,15 +104,44 @@ const ViewButton: React.FC<{ sn_mac: number }> = ({ sn_mac }) => {
     </button>
   );
 }
+
 interface ClientProps {
   filter?: string;
 }
 
-const Clients: React.FC<ClientProps> = ({filter}) => {
-  const apiClientsFilter = filter? apiClients + '/status/' + filter : apiClients
+interface FiltersType {
+  onuType: string;
+  status: string;
+  signal: string;
+}
+type FilterKey = keyof FiltersType;
+
+const Clients: React.FC<ClientProps> = ({ filter }) => {
+  const [filters, setFilters] = useState<FiltersType>({ onuType: '', status: '', signal: '' });
+
+  // const apiClientsFilter = `${apiClients}?${Object.entries(filters)
+  //   .filter(([_, value]) => value)
+  //   .map(([key, value]) => `${key}=${value}`)
+  //   .join('&')}`;
+
+  const handleFilterChange = (key: string, val: string) => {
+    if (key in filters) {
+      const keyAux = key as FilterKey;
+      setFilters(prevFilters => {
+        const newFilters = { ...prevFilters, [keyAux]: prevFilters[keyAux] === val ? '' : val };
+        return newFilters;
+      });
+    }
+  };
+
+  useEffect(() => {
+    console.log(filters);
+  }, [filters]);
+
   return (
     <div>
-      <Table columns={columns} fetchLink={apiClientsFilter} />
+      <FilterBar onFilterChange={handleFilterChange} />
+      <Table columns={columns} fetchLink={apiClients} />
     </div>
   );
 }
