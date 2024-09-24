@@ -30,6 +30,7 @@
 .filter-bar .button-active{
     opacity: 1;
 }
+
 .filter-bar button:disabled {
     background-color: #DBE2EF;
     cursor: not-allowed;
